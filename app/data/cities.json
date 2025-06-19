@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Buenos Aires",
+    "slug": "buenos-aires",
+    "properties": 11433,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-979186&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Mar del Plata",
+    "slug": "mar-del-plata",
+    "properties": 5865,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1003243&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Córdoba",
+    "slug": "cordoba",
+    "properties": 3198,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-983417&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "San Carlos de Bariloche",
+    "slug": "san-carlos-de-bariloche",
+    "properties": 2865,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1012061&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Mendoza",
+    "slug": "mendoza",
+    "properties": 2595,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1003869&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Salta",
+    "slug": "salta",
+    "properties": 2065,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1011490&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Villa Carlos Paz",
+    "slug": "villa-carlos-paz",
+    "properties": 1707,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1018872&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "San Rafael",
+    "slug": "san-rafael",
+    "properties": 1645,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1013899&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Ushuaia",
+    "slug": "ushuaia",
+    "properties": 1548,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1018179&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "San Martín de los Andes",
+    "slug": "san-martin-de-los-andes",
+    "properties": 1260,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1013487&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Rosario",
+    "slug": "rosario",
+    "properties": 1225,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1011058&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  },
+  {
+    "name": "Tandil",
+    "slug": "tandil",
+    "properties": 1176,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1016610&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+  }
+]
