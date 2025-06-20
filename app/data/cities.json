@@ -299,5 +299,157 @@
     "slug": "la-rioja",
     "properties": 303,
     "booking_url": "https://www.booking.com/searchresults.es.html?city=-998095&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=Hostel"
+ },
+  
+  {
+    "name": "Villa María",
+    "slug": "villa-maria",
+    "properties": 303,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1019028&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "San Clemente del Tuyú",
+    "slug": "san-clemente-del-tuyu",
+    "properties": 298,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1012096&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Malargüe",
+    "slug": "malargue",
+    "properties": 295,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1002891&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Chascomús",
+    "slug": "chascomus",
+    "properties": 282,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-981792&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Santa Teresita",
+    "slug": "santa-teresita",
+    "properties": 271,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1015083&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Potrerillos",
+    "slug": "potrerillos",
+    "properties": 261,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1008500&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "San Bernardo",
+    "slug": "san-bernardo",
+    "properties": 261,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1011924&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Termas de Río Hondo",
+    "slug": "termas-de-rio-hondo",
+    "properties": 258,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1016834&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "El Chalten",
+    "slug": "el-chalten",
+    "properties": 256,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=900040411&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "San Pedro",
+    "slug": "san-pedro",
+    "properties": 252,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1013757&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "La Cieneguita",
+    "slug": "la-cieneguita",
+    "properties": 245,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-994132&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Concepción del Uruguay",
+    "slug": "concepcion-del-uruguay",
+    "properties": 243,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-983232&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Mar de Ajó",
+    "slug": "mar-de-ajo",
+    "properties": 242,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1003239&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Resistencia",
+    "slug": "resistencia",
+    "properties": 237,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1010390&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Mar de las Pampas",
+    "slug": "mar-de-las-pampas",
+    "properties": 231,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=900048270&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Mar Azul",
+    "slug": "mar-azul",
+    "properties": 230,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-977818&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Maipú",
+    "slug": "maipu",
+    "properties": 229,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1002805&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "La Porteña",
+    "slug": "la-portena",
+    "properties": 228,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-997608&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Santa Rosa",
+    "slug": "santa-rosa",
+    "properties": 224,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1014920&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "La Falda",
+    "slug": "la-falda",
+    "properties": 221,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-995068&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Monte Hermoso",
+    "slug": "monte-hermoso",
+    "properties": 218,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-977822&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Capilla del Monte",
+    "slug": "capilla-del-monte",
+    "properties": 209,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-980418&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Ostende",
+    "slug": "ostende",
+    "properties": 196,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1006235&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Alta Gracia",
+    "slug": "alta-gracia",
+    "properties": 195,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-976306&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
+  },
+  {
+    "name": "Río Cuarto",
+    "slug": "rio-cuarto",
+    "properties": 184,
+    "booking_url": "https://www.booking.com/searchresults.en.html?city=-1010714&nflt=ht_id%253D203&aid=8028389&no_rooms=1&group_adults=1&room1=A&label=hostel"
   }
 ]
+
