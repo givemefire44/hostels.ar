@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import cities from "../data/cities.json";
 
