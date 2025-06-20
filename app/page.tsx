@@ -7,6 +7,7 @@ interface City {
   slug: string;
   properties: number;
   booking_url: string;
+  country?: string; // Puedes agregar país si lo tienes
 }
 
 export default function HomePage() {
@@ -19,36 +20,28 @@ export default function HomePage() {
     c.name.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!show || filtradas.length === 0) return;
-    if (e.key === "ArrowDown") setSelected((s) => Math.min(filtradas.length - 1, s + 1));
-    if (e.key === "ArrowUp") setSelected((s) => Math.max(-1, s - 1));
-    if (e.key === "Enter" && selected >= 0) {
-      window.open(filtradas[selected].booking_url, "_blank");
-      setShow(false);
-      setBusqueda("");
-      setSelected(-1);
-    }
-    if (e.key === "Escape") {
-      setShow(false);
-      setSelected(-1);
-    }
+  // Cuando selecciona una ciudad, traslada el nombre al input
+  const handleSelect = (i: number) => {
+    setBusqueda(filtradas[i].name);
+    setShow(false);
+    setSelected(-1);
+    // Si quieres abrir el link directamente, también puedes: window.open(filtradas[i].booking_url, "_blank");
   };
 
-  // Al hacer click en el botón "¡Vamos!", abre la primera coincidencia si existe
-  const handleVamos = () => {
-    if (filtradas.length > 0) {
-      window.open(filtradas[0].booking_url, "_blank");
-      setBusqueda("");
-      setShow(false);
-      setSelected(-1);
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!show || filtradas.length === 0) return;
+    if (e.key === "ArrowDown") setSelected(s => Math.min(filtradas.length - 1, s + 1));
+    if (e.key === "ArrowUp") setSelected(s => Math.max(0, s - 1));
+    if (e.key === "Enter" && selected >= 0) {
+      handleSelect(selected);
     }
+    if (e.key === "Escape") { setShow(false); setSelected(-1); }
   };
 
   return (
-    <main className="main-bg">
+    <main style={{ minHeight: "100vh", background: "linear-gradient(180deg, #8f2fbf 0%, #e3defc 100%)", paddingTop: 56 }}>
       <div className="searchbar-container">
-        <div className="searchbar">
+        <div className="searchbar-big">
           <span className="search-icon">
             <svg width={20} height={20} fill="none" stroke="#6c6c6c" strokeWidth="2" viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8" />
@@ -62,72 +55,62 @@ export default function HomePage() {
             value={busqueda}
             onChange={e => { setBusqueda(e.target.value); setShow(true); setSelected(-1); }}
             onFocus={() => setShow(true)}
-            onBlur={() => setTimeout(() => setShow(false), 100)}
+            onBlur={() => setTimeout(() => setShow(false), 120)}
             onKeyDown={handleKeyDown}
-            autoComplete="off"
             className="search-input"
+            autoComplete="off"
           />
-          <button
-            className="vamos-btn"
-            onClick={handleVamos}
-            disabled={filtradas.length === 0}
-            tabIndex={0}
-          >
-            ¡Vamos! <span style={{ marginLeft: 6 }}>→</span>
-          </button>
-          {show && busqueda &&
-            <ul className="suggestions">
-              {filtradas.length === 0 ? (
-                <li className="no-results">No se encontraron ciudades.</li>
-              ) : (
-                filtradas.map((ciudad, i) => (
-                  <li
-                    key={ciudad.slug}
-                    tabIndex={0}
-                    className={i === selected ? "selected" : ""}
-                    onMouseDown={() => window.open(ciudad.booking_url, "_blank")}
-                    onMouseEnter={() => setSelected(i)}
-                  >
-                    <span className="city-emoji" role="img" aria-label="City">🏙️</span>
-                    <strong>{ciudad.name}</strong>
-                    <span className="city-props">{ciudad.properties} alojamientos</span>
-                  </li>
-                ))
-              )}
-            </ul>
-          }
+          {busqueda && (
+            <button className="clear-btn" onClick={() => setBusqueda("")} aria-label="Limpiar búsqueda">
+              <svg width={18} height={18} viewBox="0 0 20 20"><line x1="5" y1="5" x2="15" y2="15" stroke="#444" strokeWidth="2"/><line x1="15" y1="5" x2="5" y2="15" stroke="#444" strokeWidth="2"/></svg>
+            </button>
+          )}
         </div>
-        <div className="info-row">
-          <span className="calendar-confirmation">
-            <svg width={24} height={24} fill="none" viewBox="0 0 24 24" style={{ verticalAlign: "middle" }}>
-              <rect x="3" y="4" width="18" height="17" rx="3" fill="#fff" stroke="#4caf50" strokeWidth="2" />
-              <path d="M7 11l3 3 5-5" stroke="#4caf50" strokeWidth="2" fill="none" />
-              <rect x="7.5" y="2" width="1.5" height="4" rx="0.75" fill="#4caf50" />
-              <rect x="15" y="2" width="1.5" height="4" rx="0.75" fill="#4caf50" />
-            </svg>
-            <b> Cancelación gratuita</b> y <b>reservacion flexible</b> disponibles
-          </span>
-        </div>
+        {show && busqueda &&
+          <ul className="suggestions-dropdown">
+            {filtradas.length === 0 ? (
+              <li className="no-results">No se encontraron ciudades.</li>
+            ) : (
+              filtradas.map((ciudad, i) => (
+                <li
+                  key={ciudad.slug}
+                  tabIndex={0}
+                  className={i === selected ? "selected" : ""}
+                  onMouseDown={() => handleSelect(i)}
+                  onMouseEnter={() => setSelected(i)}
+                >
+                  <span className="city-emoji" role="img" aria-label="Ciudad">🏙️</span>
+                  <div className="city-data">
+                    <span className={i === selected ? "city-name bold" : "city-name"}>
+                      {ciudad.name}
+                    </span>
+                    <span className="city-country">{ciudad.country || "Argentina"}</span>
+                  </div>
+                  {i === selected && (
+                    <span className="selected-check">
+                      <svg width={20} height={20} viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#8f2fbf" strokeWidth="2"/><path d="M7 10.5L9 12.5L13 8.5" stroke="#8f2fbf" strokeWidth="2" strokeLinecap="round"/></svg>
+                    </span>
+                  )}
+                </li>
+              ))
+            )}
+          </ul>
+        }
       </div>
       <style>{`
-        .main-bg {
-          min-height: 100vh;
-          background: linear-gradient(180deg, #8f2fbf 0%, #e3defc 100%);
-          padding-top: 56px;
-        }
         .searchbar-container {
-          max-width: 700px;
+          max-width: 550px;
           margin: 0 auto;
         }
-        .searchbar {
+        .searchbar-big {
           display: flex;
           align-items: center;
           background: #fff;
-          border-radius: 18px;
-          box-shadow: 0 6px 32px #0001;
-          padding: 0 0 0 16px;
+          border-radius: 16px;
+          box-shadow: 0 2px 14px #0002;
+          padding: 8px 16px;
           position: relative;
-          min-height: 60px;
+          min-height: 54px;
           gap: 10px;
         }
         .search-icon {
@@ -139,97 +122,83 @@ export default function HomePage() {
           border: none;
           outline: none;
           font-size: 1.15rem;
-          padding: 18px 12px 18px 0;
           background: none;
+          padding: 14px 8px;
         }
-        .vamos-btn {
-          background: #ff6600;
-          color: #fff;
+        .clear-btn {
+          background: none;
           border: none;
-          border-radius: 12px;
-          font-size: 1.16rem;
-          font-weight: 600;
-          padding: 10px 28px;
-          margin: 8px 12px 8px 6px;
           cursor: pointer;
+          margin-right: 6px;
           display: flex;
           align-items: center;
-          transition: background 0.15s;
-          box-shadow: 0 2px 8px #ff660015;
         }
-        .vamos-btn:disabled {
-          background: #ccc;
-          cursor: not-allowed;
-        }
-        .suggestions {
+        .suggestions-dropdown {
           position: absolute;
           left: 0;
-          top: 100%;
+          top: 60px;
           width: 100%;
           background: #fff;
-          border: 1.5px solid #e3e3e3;
-          border-top: none;
-          border-radius: 0 0 16px 16px;
-          box-shadow: 0 4px 32px #0001;
-          z-index: 10;
-          max-height: 280px;
-          overflow-y: auto;
-          margin-top: -2px;
+          border-radius: 18px;
+          box-shadow: 0 8px 32px 0 #0003;
+          z-index: 20;
+          margin-top: 6px;
           padding: 0;
+          list-style: none;
+          max-height: 320px;
+          overflow-y: auto;
+          min-width: 350px;
         }
-        .suggestions li {
-          padding: 12px 20px;
-          cursor: pointer;
-          transition: background 0.12s;
+        .suggestions-dropdown li {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 14px;
+          padding: 16px 22px;
+          cursor: pointer;
+          border: 2px solid transparent;
           font-size: 1.08em;
+          transition: background 0.14s, border 0.14s;
         }
-        .suggestions li.selected,
-        .suggestions li:hover,
-        .suggestions li:focus {
+        .suggestions-dropdown li.selected,
+        .suggestions-dropdown li:hover,
+        .suggestions-dropdown li:focus {
           background: #f0f4fa;
+          font-weight: bold;
+          border: 2px solid #8f2fbf;
+          outline: none;
         }
         .no-results {
-          padding: 14px;
           color: #888;
+          padding: 18px;
+          font-size: 1em;
         }
         .city-emoji {
-          font-size: 1.2em;
+          font-size: 1.3em;
           margin-right: 4px;
         }
-        .city-props {
+        .city-data {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .city-name {
+          font-size: 1.09em;
+        }
+        .city-name.bold {
+          font-weight: bold;
+        }
+        .city-country {
+          font-size: 0.96em;
           color: #888;
+        }
+        .selected-check {
           margin-left: 8px;
-          font-size: 0.98em;
-        }
-        .info-row {
-          margin-top: 18px;
           display: flex;
-          align-items: flex-start;
-          gap: 10px;
-        }
-        .calendar-confirmation {
-          color: #222;
-          font-size: 1.03em;
-          display: flex;
-          align-items: center;
-          gap: 7px;
         }
         @media (max-width: 600px) {
-          .searchbar {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0;
-            padding: 14px 6px 8px 8px;
-            min-height: unset;
-          }
-          .vamos-btn {
-            width: 100%;
-            margin: 6px 0 0 0;
-            font-size: 1.06em;
-            padding: 10px 0;
+          .searchbar-container, .suggestions-dropdown {
+            min-width: unset;
+            width: 97vw;
           }
         }
       `}</style>
