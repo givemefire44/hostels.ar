@@ -1,106 +1,110 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
+import cities from "./data/cities.json"; // Ajustá el path según tu estructura
 
-type Ciudad = {
-  id: number;
-  Nombre: string;
+interface City {
+  name: string;
   slug: string;
-  Pais: string;
-  // Agregá más campos si los necesitás
-};
+  properties: number;
+  booking_url: string;
+}
 
 export default function HomePage() {
-  const [ciudades, setCiudades] = useState<Ciudad[]>([]);
   const [busqueda, setBusqueda] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    async function fetchCiudades() {
-      try {
-        // Cambiá la URL si tu Strapi está en otro puerto/dominio
-        const res = await fetch("http://localhost:1337/api/ciudades");
-        const data = await res.json();
-        const parsed = data.data.map((item: any) => ({
-          id: item.id,
-          Nombre: item.attributes?.Nombre || item.Nombre,
-          slug: item.attributes?.slug || item.slug,
-          Pais: item.attributes?.Pais || item.Pais,
-        }));
-        setCiudades(parsed);
-      } catch (error) {
-        console.error("Error al traer ciudades", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCiudades();
-  }, []);
-
-  const ciudadesFiltradas = ciudades.filter(c =>
-    c.Nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-    c.Pais.toLowerCase().includes(busqueda.toLowerCase())
+  const ciudadesFiltradas = (cities as City[]).filter((c) =>
+    c.name.toLowerCase().includes(busqueda.toLowerCase())
   );
 
+  // Cierra las sugerencias al perder foco
+  const handleBlur = () => {
+    setTimeout(() => setShowSuggestions(false), 100);
+  };
+
+  // Cuando seleccionás una ciudad: abrir en Booking y limpiar input
+  const handleSelect = (url: string) => {
+    window.open(url, "_blank");
+    setBusqueda(""); // Limpiar input
+    setShowSuggestions(false);
+    inputRef.current?.blur();
+  };
+
   return (
-    <main style={{ maxWidth: 700, margin: "0 auto", padding: 32 }}>
-      <h1 style={{ fontSize: "2.5rem", textAlign: "center", marginBottom: 32 }}>
+    <main style={{ maxWidth: 500, margin: "0 auto", padding: 32 }}>
+      <h1 style={{ fontSize: "2rem", textAlign: "center", marginBottom: 32 }}>
         🏨 Hostels.ar
       </h1>
-      <input
-        type="text"
-        placeholder="Buscar ciudad o país..."
-        value={busqueda}
-        onChange={e => setBusqueda(e.target.value)}
-        style={{
-          width: "100%",
-          padding: 12,
-          borderRadius: 8,
-          border: "1px solid #ddd",
-          fontSize: 18,
-          marginBottom: 32,
-        }}
-      />
+      <div style={{ position: "relative" }}>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Buscar ciudad..."
+          value={busqueda}
+          onChange={e => {
+            setBusqueda(e.target.value);
+            setShowSuggestions(true);
+          }}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={handleBlur}
+          style={{
+            width: "100%",
+            padding: 12,
+            borderRadius: 8,
+            border: "1px solid #ddd",
+            fontSize: 18,
+            marginBottom: 0,
+          }}
+          autoComplete="off"
+        />
 
-      {loading ? (
-        <p>Cargando ciudades...</p>
-      ) : (
-        <>
-          {ciudadesFiltradas.length === 0 ? (
-            <p>No se encontraron ciudades.</p>
-          ) : (
-            <ul style={{ listStyle: "none", padding: 0 }}>
-              {ciudadesFiltradas.map(ciudad => (
+        {showSuggestions && busqueda && (
+          <ul
+            style={{
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+              position: "absolute",
+              width: "100%",
+              background: "#fff",
+              border: "1px solid #ddd",
+              borderTop: "none",
+              zIndex: 10,
+              maxHeight: 220,
+              overflowY: "auto",
+              boxShadow: "0 2px 8px #0002"
+            }}
+          >
+            {ciudadesFiltradas.length === 0 ? (
+              <li style={{ padding: 12, color: "#888" }}>No se encontraron ciudades.</li>
+            ) : (
+              ciudadesFiltradas.map((ciudad) => (
                 <li
-                  key={ciudad.id}
+                  key={ciudad.slug}
+                  tabIndex={0}
                   style={{
-                    marginBottom: 24,
-                    border: "1px solid #eee",
-                    borderRadius: 8,
-                    padding: 18,
-                    boxShadow: "0 2px 10px #0001",
+                    padding: 12,
+                    cursor: "pointer",
+                    borderBottom: "1px solid #f0f0f0",
+                    background: "#fff"
+                  }}
+                  onMouseDown={() => handleSelect(ciudad.booking_url)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSelect(ciudad.booking_url);
                   }}
                 >
-                  <a
-                    href={`/ciudades/${ciudad.slug}`}
-                    style={{
-                      textDecoration: "none",
-                      color: "#0070f3",
-                      fontWeight: "bold",
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    {ciudad.Nombre}
-                  </a>
-                  <div style={{ color: "#666", fontSize: 16 }}>
-                    {ciudad.Pais}
-                  </div>
+                  <strong>{ciudad.name}</strong>
+                  <span style={{ color: "#888", marginLeft: 8 }}>
+                    ({ciudad.properties} alojamientos)
+                  </span>
                 </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
+              ))
+            )}
+          </ul>
+        )}
+      </div>
     </main>
   );
 }
