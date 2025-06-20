@@ -4,16 +4,16 @@ import cities from "./data/cities.json";
 
 interface City {
   name: string;
-  country?: string;
   slug: string;
-  properties?: number;
+  properties: number;
   booking_url: string;
 }
 
 export default function HomePage() {
   const [busqueda, setBusqueda] = useState("");
   const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState(-1);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const filtradas: City[] = busqueda
@@ -24,28 +24,27 @@ export default function HomePage() {
 
   // Selección de ciudad
   const handleSelect = (ciudad: City) => {
-    setBusqueda(`${ciudad.name}${ciudad.country ? ', ' + ciudad.country : ''}`);
+    setBusqueda(ciudad.name);
     setShow(false);
-    setSelected(-1);
+    setHovered(null);
+    setSelectedCity(ciudad);
     inputRef.current?.blur();
   };
 
   // Teclado
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!show || filtradas.length === 0) return;
-    if (e.key === "ArrowDown") setSelected(s => Math.min(filtradas.length - 1, s + 1));
-    if (e.key === "ArrowUp") setSelected(s => Math.max(0, s - 1));
-    if (e.key === "Enter" && selected >= 0) {
-      handleSelect(filtradas[selected]);
+    if (e.key === "ArrowDown") setHovered(h => h === null ? 0 : Math.min(filtradas.length - 1, h + 1));
+    if (e.key === "ArrowUp") setHovered(h => h === null ? filtradas.length - 1 : Math.max(0, h - 1));
+    if (e.key === "Enter" && hovered !== null) {
+      handleSelect(filtradas[hovered]);
     }
-    if (e.key === "Escape") { setShow(false); setSelected(-1); }
+    if (e.key === "Escape") { setShow(false); setHovered(null); }
   };
 
   // Botón vamos
   const handleVamos = () => {
-    const match = (cities as City[]).find(
-      c => `${c.name}${c.country ? ', ' + c.country : ''}`.toLowerCase() === busqueda.toLowerCase()
-    );
+    const match = (cities as City[]).find(c => c.name.toLowerCase() === busqueda.toLowerCase());
     if (match) window.open(match.booking_url, "_blank");
   };
 
@@ -71,19 +70,20 @@ export default function HomePage() {
             onChange={e => {
               setBusqueda(e.target.value);
               setShow(true);
-              setSelected(-1);
+              setHovered(null);
             }}
             onFocus={() => { if (busqueda) setShow(true); }}
             onBlur={() => setTimeout(() => setShow(false), 120)}
             onKeyDown={handleKeyDown}
             className="search-input"
+            style={{ fontWeight: 400 }}
           />
           {busqueda && (
             <button
               type="button"
               className="clear-btn"
               aria-label="Limpiar"
-              onClick={() => { setBusqueda(""); setShow(false); setSelected(-1); inputRef.current?.focus(); }}
+              onClick={() => { setBusqueda(""); setShow(false); setHovered(null); inputRef.current?.focus(); }}
             >
               <svg width={16} height={16} viewBox="0 0 20 20"><line x1="5" y1="5" x2="15" y2="15" stroke="#444" strokeWidth="2"/><line x1="15" y1="5" x2="5" y2="15" stroke="#444" strokeWidth="2"/></svg>
             </button>
@@ -99,37 +99,37 @@ export default function HomePage() {
 
         {show && filtradas.length > 0 &&
           <ul className="dropdown">
-            {filtradas.map((ciudad, i) => (
-              <li
-                key={ciudad.slug}
-                className={i === selected ? "active" : ""}
-                onMouseDown={() => handleSelect(ciudad)}
-                onMouseEnter={() => setSelected(i)}
-              >
-                <div className="item-row">
-                  <span className="city-emoji" role="img" aria-label="Ciudad">🏙️</span>
-                  <div className="city-data">
-                    <span className={i === selected ? "city-name bold" : "city-name"}>
+            {filtradas.map((ciudad, i) => {
+              // La ciudad está seleccionada si es la última elegida o si está bajo el mouse/teclado
+              const isActive = hovered === i;
+              const isSelected = selectedCity && selectedCity.name === ciudad.name;
+              return (
+                <li
+                  key={ciudad.slug}
+                  className={`${isActive ? "active" : ""}`}
+                  onMouseDown={() => handleSelect(ciudad)}
+                  onMouseEnter={() => setHovered(i)}
+                >
+                  <div className={`item-row${isActive ? " hovered" : ""}${isSelected ? " selected" : ""}`}>
+                    <span className="city-icon" role="img" aria-label="Ciudad">🏙️</span>
+                    <span className={`city-name${isActive || isSelected ? " bold" : ""}`}>
                       {ciudad.name}
                     </span>
-                    <span className="city-country">
-                      {ciudad.country || "Argentina"}
+                    <span className="city-props">
+                      {ciudad.properties} alojamientos
                     </span>
+                    {isActive && (
+                      <span className="selected-check">
+                        <svg width={20} height={20} viewBox="0 0 20 20" fill="none">
+                          <circle cx="10" cy="10" r="8" stroke="#8f2fbf" strokeWidth="2"/>
+                          <path d="M7 10.5L9.5 13 13 8.5" stroke="#8f2fbf" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      </span>
+                    )}
                   </div>
-                  {typeof ciudad.properties === "number" && (
-                    <span className="city-props">{ciudad.properties} alojamientos</span>
-                  )}
-                  {i === selected && (
-                    <span className="selected-check">
-                      <svg width={20} height={20} viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="10" r="8" stroke="#8f2fbf" strokeWidth="2"/>
-                        <path d="M7 10.5L9.5 13 13 8.5" stroke="#8f2fbf" strokeWidth="2" strokeLinecap="round"/>
-                      </svg>
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
+                </li>
+              )
+            })}
           </ul>
         }
       </form>
@@ -143,7 +143,7 @@ export default function HomePage() {
           padding-top: 80px;
         }
         .search-bar-wrap {
-          width: 420px;
+          width: 460px;
           position: relative;
         }
         .search-bar {
@@ -152,8 +152,8 @@ export default function HomePage() {
           background: #fff;
           border-radius: 18px;
           box-shadow: 0 2px 14px #0002;
-          padding: 8px 12px 8px 14px;
-          gap: 8px;
+          padding: 9px 12px 9px 16px;
+          gap: 10px;
         }
         .search-icon {
           display: flex;
@@ -162,9 +162,10 @@ export default function HomePage() {
           flex: 1 1 0%;
           border: none;
           outline: none;
-          font-size: 1.18rem;
+          font-size: 1.21rem;
           background: none;
-          padding: 11px 7px;
+          padding: 12px 7px;
+          font-weight: 400;
         }
         .clear-btn {
           border: none;
@@ -180,8 +181,8 @@ export default function HomePage() {
           border: none;
           border-radius: 12px;
           font-size: 1.11rem;
-          font-weight: 600;
-          padding: 10px 23px;
+          font-weight: 700;
+          padding: 10px 25px;
           margin: 0 3px 0 8px;
           cursor: pointer;
           transition: background 0.15s;
@@ -207,29 +208,29 @@ export default function HomePage() {
         }
         .dropdown li {
           padding: 0;
-          margin: 0 8px;
+          margin: 0 9px;
         }
         .item-row {
           display: flex;
           align-items: center;
           gap: 13px;
-          padding: 15px 12px;
+          padding: 14px 12px;
           border-radius: 10px;
-          transition: background 0.12s, border 0.14s;
+          transition: background 0.13s, border 0.13s;
           position: relative;
+          border: 2px solid transparent;
+          background: none;
         }
-        .dropdown li.active .item-row,
-        .dropdown li:hover .item-row {
+        .item-row.hovered {
           background: #f0f4fa;
           border: 2px solid #8f2fbf;
         }
-        .city-emoji {
-          font-size: 1.3em;
+        .item-row.selected {
+          font-weight: bold;
+          color: #5e1f8a;
         }
-        .city-data {
-          display: flex;
-          flex-direction: column;
-          flex: 1;
+        .city-icon {
+          font-size: 1.25em;
         }
         .city-name {
           font-size: 1.07em;
@@ -238,14 +239,10 @@ export default function HomePage() {
         .city-name.bold {
           font-weight: bold;
         }
-        .city-country {
-          font-size: 0.98em;
-          color: #878787;
-        }
         .city-props {
           color: #888;
-          margin-left: 8px;
-          font-size: 0.98em;
+          margin-left: auto;
+          font-size: 0.99em;
         }
         .selected-check {
           margin-left: 8px;
