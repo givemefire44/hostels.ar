@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import cities from "./data/cities.json";
 
-// =============== Buscador Predictivo (reutilizable) ===============
+// =========== Buscador Predictivo (ajustado para ser la vedette) ===========
 interface City {
   name: string;
   slug: string;
@@ -54,9 +54,9 @@ function BuscadorHero() {
       autoComplete="off"
       onSubmit={e => { e.preventDefault(); handleVamos(); }}
     >
-      <div className="search-bar">
+      <div className="search-bar vedette">
         <span className="search-icon">
-          <svg width={18} height={18} fill="none" stroke="#6c6c6c" strokeWidth="2" viewBox="0 0 24 24">
+          <svg width={22} height={22} fill="none" stroke="#6c6c6c" strokeWidth="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
@@ -84,21 +84,20 @@ function BuscadorHero() {
             aria-label="Limpiar"
             onClick={() => { setBusqueda(""); setShow(false); setHovered(null); inputRef.current?.focus(); }}
           >
-            <svg width={16} height={16} viewBox="0 0 20 20">
+            <svg width={18} height={18} viewBox="0 0 20 20">
               <line x1="5" y1="5" x2="15" y2="15" stroke="#444" strokeWidth="2"/>
               <line x1="15" y1="5" x2="5" y2="15" stroke="#444" strokeWidth="2"/>
             </svg>
           </button>
         )}
         <button
-          className="vamos-btn"
+          className="vamos-btn maize"
           type="submit"
           disabled={!busqueda}
         >
-          ¡Vamos! <span style={{ marginLeft: 6 }}>→</span>
+          ¡Buscar!
         </button>
       </div>
-
       {show && filtradas.length > 0 &&
         <ul className="dropdown">
           {filtradas.map((ciudad, i) => {
@@ -136,19 +135,20 @@ function BuscadorHero() {
       <style>{`
         .search-bar-wrap {
           width: 100%;
-          max-width: 525px;
+          max-width: 780px;
           margin: 0 auto;
           position: relative;
           z-index: 4;
         }
-        .search-bar {
+        .search-bar.vedette {
           display: flex;
           align-items: center;
           background: #fff;
-          border-radius: 18px;
-          box-shadow: 0 4px 22px #0002;
-          padding: 9px 12px 9px 16px;
+          border-radius: 22px;
+          box-shadow: 0 5px 32px #0001;
+          padding: 14px 18px 14px 22px;
           gap: 10px;
+          min-height: 64px;
         }
         .search-icon {
           display: flex;
@@ -157,34 +157,40 @@ function BuscadorHero() {
           flex: 1 1 0%;
           border: none;
           outline: none;
-          font-size: 1.21rem;
+          font-size: 1.32rem;
           background: none;
-          padding: 12px 7px;
+          padding: 19px 9px 18px 9px;
           font-weight: 400;
         }
         .clear-btn {
           border: none;
           background: transparent;
           cursor: pointer;
-          margin-right: 2px;
+          margin-right: 1px;
           display: flex;
           align-items: center;
         }
-        .vamos-btn {
-          background: #ff6600;
-          color: #fff;
+        .vamos-btn.maize {
+          background: #ffe236; /* Maíz */
+          color: #6b4700;
           border: none;
-          border-radius: 12px;
-          font-size: 1.11rem;
-          font-weight: 700;
-          padding: 10px 25px;
-          margin: 0 3px 0 8px;
+          border-radius: 16px;
+          font-size: 1.21rem;
+          font-weight: 800;
+          padding: 12px 40px;
+          margin: 0 0 0 16px;
           cursor: pointer;
-          transition: background 0.15s;
+          box-shadow: 0 1px 6px #0001;
+          transition: background 0.16s, color 0.16s;
         }
-        .vamos-btn:disabled {
-          background: #ccc;
+        .vamos-btn.maize:disabled {
+          background: #eee;
+          color: #bbb;
           cursor: not-allowed;
+        }
+        .vamos-btn.maize:hover:not(:disabled) {
+          background: #ffb700; /* Naranja fuerte */
+          color: #fff;
         }
         .dropdown {
           position: absolute;
@@ -230,7 +236,7 @@ function BuscadorHero() {
         .dropdown .city-name { color: #2d2d2d; }
         .dropdown .city-name.bold { color: #5e1f8a; }
         .city-name {
-          font-size: 1.07em;
+          font-size: 1.09em;
           font-weight: 500;
         }
         .city-name.bold {
@@ -245,223 +251,369 @@ function BuscadorHero() {
           margin-left: 8px;
           display: flex;
         }
-        @media (max-width: 600px) {
+        @media (max-width: 900px) {
           .search-bar-wrap {
-            width: 98vw;
-            min-width: unset;
-            max-width: 99vw;
+            max-width: 98vw;
           }
+        }
+        @media (max-width: 600px) {
+          .search-bar.vedette { flex-direction: column; padding: 14px 7px; }
+          .vamos-btn.maize { margin: 12px 0 0 0; width: 100%; }
+          .search-bar-wrap { max-width: 100vw; }
         }
       `}</style>
     </form>
   );
 }
 
-// ======================= HOME PAGE =======================
-export default function HomePage() {
-  // Ejemplo de imágenes de stock libres, reemplaza por las tuyas
-  const TESTIMONIAL_IMG = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=400&h=400&q=80";
-  const HOSTEL_IMG = "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=600&q=80";
+// =========== Carrusel de Testimonios (mock) ===========
+const testimonios = [
+  {
+    nombre: "Valentina, 27 años",
+    pais: "Uruguay",
+    texto: "¡Conocí amigos para toda la vida en mi primer viaje sola! El ambiente de hostel es único.",
+    avatar: "https://randomuser.me/api/portraits/women/50.jpg"
+  },
+  {
+    nombre: "Lucas, 30 años",
+    pais: "Argentina",
+    texto: "Reservé por Hostels.ar y terminé viajando con un grupo de personas increíbles. ¡Experiencia 10 puntos!",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg"
+  },
+  {
+    nombre: "Sofía, 23 años",
+    pais: "Chile",
+    texto: "Me animé a charlar en el chat del hostel antes de llegar y ya tenía planes para salir apenas pisé la ciudad.",
+    avatar: "https://randomuser.me/api/portraits/women/81.jpg"
+  }
+];
+
+function CarruselTestimonios() {
+  const [index, setIndex] = useState(0);
+  const next = () => setIndex(i => (i + 1) % testimonios.length);
+  const prev = () => setIndex(i => (i - 1 + testimonios.length) % testimonios.length);
 
   return (
-    <main className="home-main">
-      {/* HERO */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1>
-            Conocé <span className="color-violeta">gente increíble</span> viajando
-          </h1>
-          <p className="hero-lead">
-            Elegí tu hostel, reservá y descubrí quién más va a estar allí. Viajar nunca fue tan divertido.
-          </p>
-          <div className="buscador-vedette-wrap">
-            <BuscadorHero />
-          </div>
-          <div className="hero-bubbles">
-            <div className="bubble">¿Alguien sale hoy?</div>
-            <div className="bubble">¿Quién va al tour?</div>
-            <div className="bubble">¡Busco compas de mate!</div>
-          </div>
-        </div>
-      </section>
+    <div className="testi-carrusel">
+      <button className="carrusel-btn left" onClick={prev} aria-label="Anterior">‹</button>
+      <div className="testi-card">
+        <img src={testimonios[index].avatar} alt={testimonios[index].nombre} className="testi-avatar" />
+        <p className="testi-txt">“{testimonios[index].texto}”</p>
+        <span className="testi-nombre">{testimonios[index].nombre} · {testimonios[index].pais}</span>
+      </div>
+      <button className="carrusel-btn right" onClick={next} aria-label="Siguiente">›</button>
+      <style>{`
+        .testi-carrusel {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          margin: 32px 0 40px 0;
+        }
+        .testi-card {
+          background: #fff;
+          border-radius: 17px;
+          box-shadow: 0 2px 14px #0001;
+          padding: 38px 32px;
+          text-align: center;
+          min-width: 260px;
+          max-width: 370px;
+        }
+        .testi-avatar {
+          width: 66px; height: 66px; border-radius: 50%; margin-bottom: 13px; object-fit: cover;
+        }
+        .testi-txt { font-size: 1.08rem; margin-bottom: 10px; }
+        .testi-nombre { font-size: 0.97rem; color: #8f2fbf; font-weight: 700;}
+        .carrusel-btn {
+          background: #fff5;
+          border: none;
+          font-size: 2.5rem;
+          color: #8f2fbf;
+          border-radius: 50%;
+          width: 48px; height: 48px;
+          cursor: pointer;
+          transition: background 0.12s, color 0.12s;
+        }
+        .carrusel-btn:hover { background: #ffb700; color: #fff; }
+        @media (max-width: 600px) {
+          .testi-card { padding: 18px 5vw; min-width: 180px; max-width: 90vw;}
+          .testi-carrusel { gap: 4px;}
+          .carrusel-btn { width: 38px; height: 38px; font-size: 1.8rem;}
+        }
+      `}</style>
+    </div>
+  );
+}
 
-      {/* VENTAJAS */}
-      <section className="ventajas">
-        <div className="ventaja-card yellow">
-          <h3>Ver perfiles de viajeros</h3>
-          <p>Descubrí con quién vas a compartir el hostel antes de llegar.</p>
-        </div>
-        <div className="ventaja-card cyan">
-          <h3>Unite al chat del hostel</h3>
-          <p>Conectá con otros y organizá planes antes del viaje.</p>
-        </div>
-        <div className="ventaja-card purple">
-          <h3>Eventos y actividades</h3>
-          <p>Sumate a tours, cenas y experiencias grupales únicas.</p>
-        </div>
-      </section>
+// =========== Header fijo (logo + acciones mock) ===========
+function Header() {
+  return (
+    <header className="header-main">
+      <div className="header-content">
+        <span className="logo">Hostels<span className="logo-ar">.ar</span></span>
+        <nav className="header-nav">
+          <a href="#">Agregá tu propiedad</a>
+          <a href="#">Español</a>
+          <a href="#">ARS</a>
+          <button className="avatar-btn" aria-label="Usuario">
+            <svg width={28} height={28} fill="#ddd" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><circle cx="12" cy="20" r="7" fill="none" stroke="#222" strokeWidth="2"/></svg>
+          </button>
+        </nav>
+      </div>
+      <style>{`
+        .header-main {
+          width: 100vw;
+          background: #fff;
+          box-shadow: 0 2px 12px #0001;
+          position: fixed;
+          top: 0; left: 0; z-index: 100;
+          padding: 0;
+          min-height: 67px;
+        }
+        .header-content {
+          max-width: 1220px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 67px;
+          padding: 0 22px;
+        }
+        .logo {
+          font-size: 2.06rem;
+          font-weight: 900;
+          color: #8f2fbf;
+          letter-spacing: -2px;
+        }
+        .logo-ar { color: #ffb700; }
+        .header-nav {
+          display: flex; gap: 16px; align-items: center;
+        }
+        .header-nav a {
+          color: #5d239c;
+          font-weight: 600;
+          text-decoration: none;
+          font-size: 1rem;
+          margin-right: 6px;
+        }
+        .avatar-btn {
+          background: #f4f2fa; border: none; border-radius: 50%;
+          width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+          margin-left: 7px; cursor: pointer;
+        }
+        @media (max-width: 700px) {
+          .header-content { padding: 0 4vw; }
+          .logo { font-size: 1.3rem; }
+          .header-nav a { font-size: 0.97rem; }
+        }
+      `}</style>
+    </header>
+  );
+}
 
-      {/* TESTIMONIO */}
-      <section className="testimonio">
-        <img src={TESTIMONIAL_IMG} alt="Viajera feliz en hostel" className="testimonio-img" />
-        <div className="testimonio-txt">
-          <p className="testimonio-quote">
-            “Llegué sola y terminé viajando con amigos de todo el mundo. Reservar por acá fue la mejor decisión.” 
-          </p>
-          <span className="testimonio-name">Camila, 25 años, Argentina</span>
-        </div>
-      </section>
+// =========== Página Principal ===========
+export default function HomePage() {
+  // Imagen hero de fondo
+  const heroBg = "linear-gradient(120deg, #8f2fbf 60%, #ffb700 100%)";
+  // Avatars para burbujas sociales
+  const heroAvatars = [
+    { img: "https://randomuser.me/api/portraits/women/44.jpg", txt: "¿Quién sale a recorrer?" },
+    { img: "https://randomuser.me/api/portraits/men/41.jpg", txt: "¿Hay mate?" },
+    { img: "https://randomuser.me/api/portraits/women/21.jpg", txt: "¿Vamos al bar del hostel?" },
+    { img: "https://randomuser.me/api/portraits/men/30.jpg", txt: "¿Quién va al walking tour?" }
+  ];
 
-      {/* MIRÁ QUIÉN VA */}
-      <section className="mirar-quien-va">
-        <div className="mqv-bg">
-          <div className="mqv-card">
-            <img src={HOSTEL_IMG} alt="Hostel destacado" className="mqv-img" />
-            <div>
-              <h4>Los Patios Hostel</h4>
-              <span>Medellín, Colombia</span>
+  return (
+    <div>
+      <Header />
+      <main className="home-main">
+        {/* HERO */}
+        <section className="hero" style={{ background: heroBg }}>
+          <div className="hero-content">
+            <h1>
+              Conocé gente.<br />
+              <span className="hero-sub">¡Elegí dónde quedarte y te mostramos con quién!</span>
+            </h1>
+            <div className="hero-bubbles">
+              {heroAvatars.map((a, i) => (
+                <div className="bubble-avatar" key={i}>
+                  <img src={a.img} alt="" />
+                  <span>{a.txt}</span>
+                </div>
+              ))}
+            </div>
+            <div className="hero-buscador">
+              <BuscadorHero />
             </div>
           </div>
-          <div className="mqv-avatars">
-            {[1,2,3,4,5].map(i => (
-              <img key={i} src={`https://randomuser.me/api/portraits/men/${i+30}.jpg`} alt="Avatar viajero" className="mqv-avatar" />
-            ))}
-          </div>
-          <h2>
-            Mirá <span className="color-yellow">quién va</span>.
+        </section>
+
+        {/* TESTIMONIOS CARRUSEL */}
+        <section className="testimonios">
+          <h2 className="testimonios-title">
+            <span className="color-violeta">Historias reales</span> de viajeros como vos
           </h2>
-          <p>
-            Conectá con otros viajeros que están en el mismo hostel o ciudad que vos.
-          </p>
-        </div>
-      </section>
+          <CarruselTestimonios />
+        </section>
 
-      {/* CTA FINAL */}
-      <section className="cta-final">
-        <h2>¡Empezá tu aventura hostelera!</h2>
-        <button className="cta-btn">Reservá ahora</button>
-      </section>
+        {/* RESTO DE LA HOME: ejemplo sección "conectá antes de viajar" */}
+        <section className="conecta-viajeros">
+          <div className="conecta-txt">
+            <h2>
+              Ayudándote <span className="color-violeta">a conectar con viajeros</span>.<br />
+              <span className="color-fucsia">Incluso antes</span> de que llegues a tu hostel.
+            </h2>
+            <p>
+              Hablá con otros viajeros, planeá actividades y sentite parte de la comunidad desde el primer minuto. 
+            </p>
+            <button className="cta-btn">Descubrí las novedades</button>
+          </div>
+          <div className="conecta-img">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=420&q=80" alt="Viajeros en hostel" />
+          </div>
+        </section>
 
-      {/* STYLES */}
+        {/* MIRÁ QUIÉN VA */}
+        <section className="mirar-quien-va">
+          <div className="mqv-bg">
+            <div className="mqv-card">
+              <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=600&q=80" alt="Hostel destacado" className="mqv-img" />
+              <div>
+                <h4>Los Patios Hostel</h4>
+                <span>Medellín, Colombia</span>
+              </div>
+            </div>
+            <div className="mqv-avatars">
+              {[1,2,3,4,5].map(i => (
+                <img key={i} src={`https://randomuser.me/api/portraits/men/${i+23}.jpg`} alt="Avatar viajero" className="mqv-avatar" />
+              ))}
+            </div>
+            <h2>
+              Mirá <span className="color-yellow">quién va</span>.
+            </h2>
+            <p>
+              Conectá con otros viajeros que están en el mismo hostel o ciudad que vos.
+            </p>
+          </div>
+        </section>
+      </main>
+      {/* GLOBAL STYLES */}
       <style>{`
-        :root {
-          --violeta: #8f2fbf;
-          --naranja: #ff6600;
-          --amarillo: #FFDE1A;
-          --cyan: #18e0ff;
-          --gris: #333;
-        }
+        body { background: #faf9fd; }
         .home-main {
           font-family: 'Inter', Arial, sans-serif;
-          background: #f8f6fc;
-          color: var(--gris);
+          background: #faf9fd;
+          color: #222;
+          margin-top: 67px;
         }
         /* HERO */
         .hero {
-          background: linear-gradient(120deg, var(--violeta) 30%, #ff8c2b 100%);
-          padding: 54px 0 48px 0;
-          color: #fff;
+          min-height: 410px;
+          padding: 80px 0 44px 0;
           position: relative;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
         }
         .hero-content {
-          max-width: 700px;
+          width: 100%;
+          max-width: 920px;
           margin: 0 auto;
           padding: 0 18px;
           text-align: center;
+          position: relative;
         }
         .hero h1 {
-          font-size: 2.55rem;
-          font-weight: 800;
+          font-size: 2.7rem;
+          font-weight: 900;
+          color: #fff;
           margin-bottom: 16px;
+          text-shadow: 0 2px 8px #0002;
         }
-        .color-violeta { color: var(--amarillo); }
-        .hero-lead { font-size: 1.2rem; margin-bottom: 32px; }
-        .buscador-vedette-wrap {
-          margin-bottom: 22px;
-          margin-top: 8px;
-          width: 100%;
-          display: flex;
-          justify-content: center;
+        .hero-sub {
+          font-size: 1.28rem;
+          font-weight: 500;
+          color: #fff9;
+        }
+        .hero-buscador {
+          margin: 38px auto 0 auto;
+          width: 97%;
+          max-width: 790px;
         }
         .hero-bubbles {
           display: flex;
           justify-content: center;
-          gap: 10px;
-          margin-top: 20px;
+          gap: 16px;
+          margin-top: 26px;
+          margin-bottom: -8px;
           flex-wrap: wrap;
         }
-        .bubble {
-          background: #fff8;
-          color: #fff;
-          border-radius: 16px;
-          padding: 7px 15px;
-          font-size: 1rem;
-          box-shadow: 0 2px 8px #0001;
-          margin-bottom: 5px;
+        .bubble-avatar {
+          display: flex; align-items: center; background: #fff3;
+          border-radius: 18px; padding: 6px 17px 6px 6px;
+          box-shadow: 0 2px 10px #0001;
         }
-
-        /* VENTAJAS */
-        .ventajas {
-          display: flex;
-          gap: 22px;
-          max-width: 940px;
-          margin: 45px auto 0;
-          padding: 0 18px;
-          flex-wrap: wrap;
+        .bubble-avatar img {
+          width: 36px; height: 36px; border-radius: 50%; margin-right: 10px; object-fit: cover;
         }
-        .ventaja-card {
-          flex: 1 1 225px;
-          background: #fff;
-          border-radius: 15px;
-          padding: 35px 22px 28px 22px;
-          font-weight: 600;
-          box-shadow: 0 2px 14px #0001;
-          min-width: 220px;
+        .bubble-avatar span {
+          color: #fff; font-weight: 500; font-size: 1.01rem;
+          text-shadow: 0 2px 10px #0001;
+        }
+        /* TESTIMONIOS */
+        .testimonios {
+          background: none;
+          padding: 40px 0 0 0;
+        }
+        .testimonios-title {
+          text-align: center;
+          font-size: 2.08rem;
+          font-weight: 700;
           margin-bottom: 16px;
         }
-        .ventaja-card.yellow { background: var(--amarillo); color: #402800; }
-        .ventaja-card.cyan { background: var(--cyan); color: #134850; }
-        .ventaja-card.purple { background: var(--violeta); color: #fff; }
-
-        /* TESTIMONIO */
-        .testimonio {
+        .color-violeta { color: #8f2fbf; }
+        /* CONECTA VIAJEROS */
+        .conecta-viajeros {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 24px;
+          gap: 25px;
           background: #fff;
-          border-radius: 18px;
-          max-width: 760px;
-          margin: 48px auto 0;
+          border-radius: 30px;
           box-shadow: 0 2px 14px #0001;
-          padding: 32px 24px;
+          max-width: 860px;
+          margin: 38px auto 0 auto;
+          padding: 45px 24px 35px 30px;
           flex-wrap: wrap;
         }
-        .testimonio-img {
-          width: 108px;
-          height: 108px;
-          object-fit: cover;
-          border-radius: 50%;
-          box-shadow: 0 2px 8px #0001;
+        .conecta-txt { max-width: 450px; }
+        .conecta-txt h2 {
+          font-size: 1.55rem; font-weight: 900; margin-bottom: 9px;
         }
-        .testimonio-txt { max-width: 420px; }
-        .testimonio-quote {
-          font-size: 1.13rem;
-          font-style: italic;
-          margin-bottom: 13px;
+        .color-fucsia { color: #e10086; }
+        .conecta-txt p { font-size: 1.08rem; margin-bottom: 14px;}
+        .cta-btn {
+          background: #ffe236;
+          color: #6b4700;
+          border: none;
+          border-radius: 13px;
+          font-size: 1.1rem;
+          font-weight: 800;
+          padding: 11px 33px;
+          cursor: pointer;
+          transition: background 0.13s, color 0.13s;
         }
-        .testimonio-name {
-          font-size: 1.02rem;
-          color: #8f2fbf;
-          font-weight: 700;
+        .cta-btn:hover { background: #ffb700; color: #fff;}
+        .conecta-img img {
+          width: 210px; height: 210px; border-radius: 24px; object-fit: cover;
+          box-shadow: 0 2px 14px #0002;
         }
-
         /* MIRÁ QUIÉN VA */
         .mirar-quien-va {
-          background: var(--violeta);
+          background: #8f2fbf;
           color: #fff;
-          margin-top: 56px;
-          padding: 55px 0 50px 0;
+          margin-top: 60px;
+          padding: 64px 0 56px 0;
         }
         .mqv-bg {
           max-width: 700px;
@@ -507,54 +659,29 @@ export default function HomePage() {
           font-weight: 800;
           margin: 16px 0 3px 0;
         }
-        .color-yellow { color: var(--amarillo);}
+        .color-yellow { color: #ffe236;}
         .mirar-quien-va p { font-size: 1.1rem; margin-bottom: 0; }
-
-        /* CTA FINAL */
-        .cta-final {
-          background: #fff;
-          border-radius: 15px;
-          max-width: 780px;
-          margin: 42px auto 24px auto;
-          padding: 35px 18px 38px 18px;
-          text-align: center;
-          box-shadow: 0 2px 14px #0001;
-        }
-        .cta-final h2 {
-          font-size: 1.5rem;
-          font-weight: 800;
-          margin-bottom: 18px;
-        }
-        .cta-btn {
-          background: var(--naranja);
-          color: #fff;
-          border: none;
-          border-radius: 13px;
-          font-size: 1.18rem;
-          font-weight: 700;
-          padding: 13px 38px;
-          cursor: pointer;
-          transition: background 0.13s;
-        }
-        .cta-btn:hover { background: #ff7d33; }
-
         /* RESPONSIVE */
+        @media (max-width: 1020px) {
+          .hero-content { max-width: 99vw; }
+        }
         @media (max-width: 900px) {
-          .ventajas { flex-direction: column; gap: 0; }
-          .ventaja-card { min-width: unset; }
-          .testimonio { flex-direction: column; gap: 12px; }
+          .hero-buscador { max-width: 97vw; }
+          .conecta-viajeros { flex-direction: column; gap: 8px; }
         }
         @media (max-width: 650px) {
-          .hero-content, .mqv-bg, .cta-final, .ventajas, .testimonio { padding: 0 6vw; }
+          .hero-content, .mqv-bg, .conecta-viajeros, .testimonios { padding: 0 2vw; }
           .mqv-card { width: 100%; min-width: unset; }
         }
         @media (max-width: 500px) {
-          .hero h1 { font-size: 1.4rem; }
-          .mirar-quien-va h2 { font-size: 1.12rem; }
-          .testimonio-quote { font-size: 1rem; }
+          .hero h1 { font-size: 1.3rem; }
+          .mirar-quien-va h2 { font-size: 1.1rem; }
+          .testimonios-title { font-size: 1.15rem;}
+          .conecta-txt h2 { font-size: 1rem;}
           .mqv-card { flex-direction: column; align-items: flex-start; }
+          .conecta-img img { width: 98vw; height: auto; border-radius: 18px;}
         }
       `}</style>
-    </main>
+    </div>
   );
 }
