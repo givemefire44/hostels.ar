@@ -232,6 +232,12 @@ export default function HomePage() {
         .city-icon {
           font-size: 1.25em;
         }
+        .dropdown .city-name {
+  color: #2d2d2d;
+}
+.dropdown .city-name.bold {
+  color: #5e1f8a;
+}
         .city-name {
           font-size: 1.07em;
           font-weight: 500;
