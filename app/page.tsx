@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import cities from "./data/cities.json"; // Ajustá el path según tu estructura
+import cities from "./data/cities.json"; // Cambia el path si tu cities.json está en otro lado
 
 interface City {
   name: string;
@@ -15,16 +15,17 @@ export default function HomePage() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Filtra las ciudades según lo que escribas
   const ciudadesFiltradas = (cities as City[]).filter((c) =>
     c.name.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  // Cierra las sugerencias al perder foco
+  // Cierra las sugerencias al perder foco (con delay para permitir el click)
   const handleBlur = () => {
     setTimeout(() => setShowSuggestions(false), 100);
   };
 
-  // Cuando seleccionás una ciudad: abrir en Booking y limpiar input
+  // Abre el link de Booking al seleccionar una ciudad
   const handleSelect = (url: string) => {
     window.open(url, "_blank");
     setBusqueda(""); // Limpiar input
