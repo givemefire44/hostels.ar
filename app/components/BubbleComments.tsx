@@ -1,9 +1,9 @@
-import React from "react";
+ import React from "react";
 
-// Ejemplo de avatares libres de derechos, puedes cambiarlos por los que quieras
+// Puedes cambiar estos links por tus propios avatares cuando quieras
 const avatars = [
-  "https://randomuser.me/api/portraits/men/32.jpg",
   "https://randomuser.me/api/portraits/women/44.jpg",
+  "https://randomuser.me/api/portraits/men/32.jpg",
   "https://randomuser.me/api/portraits/men/54.jpg",
   "https://randomuser.me/api/portraits/women/68.jpg",
 ];
@@ -59,4 +59,3 @@ export default function BubbleComments({ comments }) {
     </div>
   );
 }
-         
