@@ -1,4 +1,4 @@
-import MainHeroLayout from "../layouts/MainHeroLayout";
+import MainHeroLayout from "./layouts/MainHeroLayout";
 
 export default function HomePage() {
   return (
