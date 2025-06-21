@@ -5,7 +5,7 @@ import HostelGrid from "./components/HostelMosaic";
 export default function HomePage() {
   return (
     <>
-      <HeroHostel />
+      <MainHeroLayout />
       <TestimonialCarousel />
       <HostelGrid />
     </>
