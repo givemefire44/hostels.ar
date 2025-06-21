@@ -1,5 +1,5 @@
 import Container from "./components/Container";
-import Hero from "./components/Hero";
+import Hero from "./components/HeroHostel";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import HostelGrid from "./components/HostelGrid";
 
