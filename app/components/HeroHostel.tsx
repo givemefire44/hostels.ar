@@ -1,11 +1,44 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import "./HeroHostel.css";
 
-// HeroHostel: todo contenido en un "container" central
+const CITIES = [
+  "Buenos Aires",
+  "Mendoza",
+  "Córdoba",
+  "Bariloche",
+  "Salta",
+  "Mar del Plata",
+  "Rosario",
+];
+
 export default function HeroHostel() {
+  const [city, setCity] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [filtered, setFiltered] = useState(CITIES);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setCity(val);
+    setShowDropdown(!!val);
+    setFiltered(
+      CITIES.filter((c) =>
+        c.toLowerCase().includes(val.toLowerCase())
+      )
+    );
+  };
+  const handleSelect = (city: string) => {
+    setCity(city);
+    setShowDropdown(false);
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Buscando hostels en ${city || "..."}`);
+  };
+
   return (
     <section className="hero-bg">
-      <div className="hero-main-container">
+      <div className="container">
         <div className="hero-panel">
           <div className="hero-panel-content">
             <div className="hero-left">
@@ -17,7 +50,7 @@ export default function HeroHostel() {
                 img="/avatars/1.png"
                 flag="🇫🇷"
                 message="Hostel bar, 9pm?"
-                style={{ top: 20, left: 300 }}
+                style={{ top: 20, left: 320 }}
               />
               <Bubble
                 img="/avatars/2.png"
@@ -39,16 +72,33 @@ export default function HeroHostel() {
               />
             </div>
           </div>
-          <form className="hero-search-form">
-            <input
-              type="text"
-              placeholder="¿A dónde quieres ir?"
-              className="hero-search-input"
-              autoComplete="off"
-            />
-            <button type="submit" className="hero-search-btn">
-              Buscar
-            </button>
+          <form className="hero-search-form" onSubmit={handleSubmit} autoComplete="off">
+            <div className="hero-search-group">
+              <input
+                type="text"
+                value={city}
+                onChange={handleChange}
+                onFocus={() => setShowDropdown(!!city)}
+                placeholder="¿A dónde quieres ir?"
+                className="hero-search-input"
+                autoComplete="off"
+              />
+              {showDropdown && filtered.length > 0 && (
+                <ul className="hero-search-dropdown">
+                  {filtered.map((cityName) => (
+                    <li
+                      key={cityName}
+                      onClick={() => handleSelect(cityName)}
+                    >
+                      {cityName}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <button type="submit" className="hero-search-btn">
+                Buscar
+              </button>
+            </div>
           </form>
         </div>
         <div className="hero-search-chips">
