@@ -1,51 +1,57 @@
-.hostel-hero {
+.hero-bg {
   width: 100%;
-  padding: 0;
-  margin: 0 auto;
-  min-height: 440px;
-  background: linear-gradient(110deg, #9d28c2 0%, #fb9a2b 100%);
-  border-radius: 32px;
+  background: #f6f6fa;
+  padding: 42px 0 0 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  position: relative;
-  overflow: hidden;
+  align-items: center;
 }
-.hostel-hero-content {
+.hero-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 32px;
+  box-shadow: 0 6px 64px #0001, 0 0px 0px #0000;
+  background: linear-gradient(110deg, #9d28c2 0%, #fb9a2b 100%);
+  padding: 48px 48px 0 48px;
+  position: relative;
+  overflow: visible;
+}
+.hero-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 64px 48px 0 64px;
   position: relative;
+  min-height: 240px;
 }
-.hostel-hero-left {
+.hero-left {
   max-width: 520px;
   z-index: 2;
 }
-.hostel-hero-title {
-  font-size: 3rem;
+.hero-left h1 {
+  font-size: 2.6em;
   color: #fff;
   font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.3em;
   line-height: 1.05;
 }
-.hostel-hero-subtitle {
-  font-size: 1.5rem;
+.hero-left h2 {
+  font-size: 1.25em;
   color: #fff;
-  font-weight: 600;
-  margin-bottom: 1.5em;
-  line-height: 1.1;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 1.2em;
 }
-.hostel-hero-doodle {
-  width: 120px;
-  height: 32px;
+.hero-doodle {
+  width: 90px;
+  height: 30px;
   margin-top: 18px;
-  /* Puedes poner un SVG decorativo si quieres */
+  background: url('/doodle.svg') no-repeat center/contain;
 }
-.hostel-hero-bubbles {
+.hero-bubbles {
   position: relative;
-  min-width: 420px;
-  min-height: 240px;
+  min-width: 320px;
+  min-height: 180px;
 }
 .hero-bubble {
   position: absolute;
@@ -59,8 +65,8 @@
   z-index: 1;
 }
 .hero-bubble-avatar {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
@@ -96,4 +102,96 @@
   margin-left: 4px;
   max-width: 180px;
   white-space: pre-line;
+}
+.hero-search-outer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 38px;
+  z-index: 5;
+}
+.hero-search-form {
+  display: flex;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 26px #0001;
+  padding: 0 12px 0 0;
+  align-items: center;
+  gap: 16px;
+  min-width: 630px;
+  min-height: 62px;
+  margin-bottom: 7px;
+}
+.hero-search-form input[type="text"] {
+  border: none;
+  font-size: 1.08rem;
+  padding: 14px 26px;
+  border-radius: 20px;
+  outline: none;
+  background: transparent;
+  flex: 1 1 220px;
+  color: #1e1e1e;
+}
+.hero-search-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 68px;
+  padding: 0 12px;
+  font-size: 0.96em;
+  color: #555;
+}
+.hero-search-btn {
+  background: #ff7b29;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.18em;
+  border: none;
+  border-radius: 14px;
+  padding: 0 22px;
+  height: 44px;
+  margin-left: 9px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-search-btn:hover {
+  background: #fb9a2b;
+}
+.hero-search-chips {
+  margin-top: 0;
+  color: #222;
+  font-size: 1.03em;
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px 18px;
+  box-shadow: 0 2px 12px #0001;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+@media (max-width: 1100px) {
+  .hero-container { max-width: 96vw; }
+}
+@media (max-width: 800px) {
+  .hero-content {
+    flex-direction: column;
+    gap: 1.5em;
+    padding: 0;
+  }
+  .hero-left { max-width: 100%; }
+  .hero-bubbles { min-width: 240px; margin: 32px 0 0 0; }
+  .hero-search-form { min-width: 90vw; }
+}
+@media (max-width: 600px) {
+  .hero-bg { padding: 14px 0 0 0; }
+  .hero-container { border-radius: 0; padding: 24px 2vw 0 2vw; }
+  .hero-content { padding: 0; }
+  .hero-left h1 { font-size: 1.4em; }
+  .hero-search-form { min-width: 100vw; font-size: 0.96em; }
 }
