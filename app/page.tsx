@@ -1,13 +1,14 @@
-import MainHeroLayout from "./layouts/MainHeroLayout";
+import MainHeroLayout from "../layouts/MainHeroLayout";
+import TestimonialCarousel from "../components/TestimonialCarousel";
+import HostelMosaic from "../components/HostelMosaic";
 
 export default function HomePage() {
   return (
     <MainHeroLayout>
-      <div>
-        {/* El resto del contenido de la home va aquí */}
-        <p style={{ textAlign: "center", marginTop: 40, color: "#333" }}>
-          Bienvenido a la comunidad de viajeros.
-        </p>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px" }}>
+        <TestimonialCarousel />
+        <HostelMosaic />
+        {/* Aquí puedes agregar más secciones, banners, etc. */}
       </div>
     </MainHeroLayout>
   );
