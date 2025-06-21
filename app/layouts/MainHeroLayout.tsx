@@ -38,7 +38,7 @@ export default function MainHeroLayout({ children }) {
             transform: "translateY(-15px)"
           }}
         >
-          ¡Elige dónde quedarte y te mostraremos con quién!
+          ¡Elige dónde ir y te mostraremos los mejores Hostels con la mejor onda!
         </h2>
         <BubbleComments
           comments={[
