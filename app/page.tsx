@@ -1,6 +1,6 @@
-import MainHeroLayout from "../layouts/MainHeroLayout";
-import TestimonialCarousel from "../components/TestimonialCarousel";
-import HostelMosaic from "../components/HostelMosaic";
+import MainHeroLayout from "./layouts/MainHeroLayout";
+import TestimonialCarousel from "./components/TestimonialCarousel";
+import HostelMosaic from "./components/HostelMosaic";
 
 export default function HomePage() {
   return (
