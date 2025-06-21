@@ -1,7 +1,7 @@
-import Container from "../components/Container";
-import Hero from "../components/Hero";
-import TestimonialCarousel from "../components/TestimonialCarousel";
-import HostelGrid from "../components/HostelGrid";
+import Container from "./components/Container";
+import Hero from "./components/Hero";
+import TestimonialCarousel from "./components/TestimonialCarousel";
+import HostelGrid from "./components/HostelGrid";
 
 export default function HomePage() {
   return (
