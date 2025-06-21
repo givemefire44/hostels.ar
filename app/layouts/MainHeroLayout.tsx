@@ -38,7 +38,7 @@ export default function MainHeroLayout({ children }) {
             transform: "translateY(-15px)"
           }}
         >
-          ¡Elige dónde ir y te mostraremos los mejores Hostels con la mejor onda!
+          ¡Elige dónde quedarte y te mostraremos con quién!
         </h2>
         <BubbleComments
           comments={[
@@ -53,7 +53,7 @@ export default function MainHeroLayout({ children }) {
         </div>
         <div
           style={{
-            color: "#181818",
+            color: "#fff700",
             fontWeight: 700,
             marginTop: 24,
             padding: "10px 0 0 0",
