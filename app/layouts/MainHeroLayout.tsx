@@ -7,15 +7,20 @@ export default function MainHeroLayout({ children }) {
       style={{
         background: "linear-gradient(135deg, #8816c0 0%, #8f3985 100%)",
         padding: "48px 0 32px 0",
-        marginTop: 10, // Para dejar espacio al header fijo
+        marginTop: 10,
+        borderRadius: 28, // Hero radius para esquinas redondeadas
+        boxShadow: "0 8px 32px rgba(80,0,80,0.10)"
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
         <h1 style={{
-          color: "#fff",
+          color: "#fff700", // Amarillo intenso
           fontSize: "3rem",
           marginBottom: 8,
-          fontWeight: 700
+          fontWeight: 700,
+          letterSpacing: 1,
+          transform: "translateY(30px)", // desplazamiento vertical
+          textShadow: "0 2px 10px rgba(0,0,0,0.10)"
         }}>
           Conoce gente.
         </h1>
@@ -23,7 +28,8 @@ export default function MainHeroLayout({ children }) {
           color: "#fff",
           fontSize: "1.5rem",
           fontWeight: 500,
-          marginBottom: 32
+          marginBottom: 32,
+          transform: "translateY(30px)"
         }}>
           ¡Elige dónde quedarte y te mostraremos con quién!
         </h2>
@@ -40,13 +46,18 @@ export default function MainHeroLayout({ children }) {
         </div>
         <div
           style={{
-            color: "#fff",
-            fontWeight: 600,
-            marginTop: 16,
-            background: "rgba(255,255,255,0.08)",
-            padding: 8,
-            borderRadius: 8,
-            display: "inline-block"
+            color: "#181818", // Letras en negro
+            fontWeight: 700,
+            marginTop: 24,
+            background: "#ffe600", // Amarillo intenso
+            padding: "10px 28px",
+            borderRadius: 12,
+            display: "block",
+            textAlign: "center",
+            fontSize: 18,
+            maxWidth: 420,
+            marginLeft: "auto",
+            marginRight: "auto"
           }}
         >
           Cancelación gratuita y reservación flexible disponibles
