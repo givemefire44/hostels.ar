@@ -7,7 +7,7 @@ export default function MainHeroLayout({ children }) {
       style={{
         background: "linear-gradient(135deg, #8816c0 0%, #8f3985 100%)",
         padding: "48px 0 32px 0",
-        marginTop: 80, // Para dejar espacio al header fijo
+        marginTop: 10, // Para dejar espacio al header fijo
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
