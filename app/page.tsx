@@ -1,12 +1,16 @@
 import Container from "./components/Container";
-import MainHeroLayout from "./layouts/MainHeroLayout";
+import Header from "./components/Header";
+import MainHeroLayout from "./layout/MainHeroLayout";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import HostelGrid from "./components/HostelMosaic";
-
+import Footer from "./components/Footer";
 
 export default function HomePage() {
   return (
     <>
+      {/* Header fijo arriba */}
+      <Header />
+      {/* Hero bajado 80px */}
       <Container>
         <MainHeroLayout />
       </Container>
@@ -16,7 +20,7 @@ export default function HomePage() {
       <Container>
         <HostelGrid />
       </Container>
-    
+      <Footer />
     </>
   );
 }
