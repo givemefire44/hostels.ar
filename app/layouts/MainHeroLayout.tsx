@@ -19,13 +19,17 @@ export default function MainHeroLayout({ children }) {
           <h2 style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 500, marginBottom: 32 }}>
             ¡Elige dónde quedarte y te mostraremos con quién!
           </h2>
+          {/* Burbujas de comentarios con avatares jóvenes sonrientes */}
           <BubbleComments
             comments={[
-              { text: "Hostel bar, 9pm?", flag: "🇫🇷" },
-              { text: "Anyone else here solo travelling?", flag: "🇨🇳" },
-              { text: "Who's up for the walking tour?", flag: "🇧🇷" },
+              { text: "¿Quién sale a recorrer?" },
+              { text: "¿Hay mate?" },
+              { text: "¡Vamos al bar del hostel!" },
+              { text: "¿Quién va al walking tour?" }
+              // Cambia estos textos por los que quieras
             ]}
           />
+          {/* Buscador de ciudades */}
           <div style={{ marginTop: 32 }}>
             <CitySearch />
           </div>
