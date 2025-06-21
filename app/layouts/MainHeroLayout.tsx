@@ -5,7 +5,7 @@ export default function MainHeroLayout({ children }) {
   return (
     <section
       style={{
-        background: "#fff", // Fondo blanco
+        background: "linear-gradient(135deg, #8816c0 0%, #8f3985 100%)", // Vuelve el gradiente violeta
         padding: "48px 0 32px 0",
         borderRadius: 28,
         boxShadow: "0 8px 32px rgba(80,0,80,0.10)"
