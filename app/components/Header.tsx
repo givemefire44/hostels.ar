@@ -14,13 +14,13 @@ export default function Header() {
       }}
     >
       <div style={{ fontWeight: 900, fontSize: 32, color: "#fff" }}>
-        <span style={{ color: "#fff" }}>Hostels</span>
+        <span style={{ color: "#8816c0" }}>Hostels</span>
         <span style={{ color: "#FFC300" }}>.ar</span>
       </div>
       <div>
         <button
           style={{
-            background: "#fff",
+            background: "#ffe600",
             border: "none",
             borderRadius: 8,
             padding: "8px 18px",
