@@ -1,13 +1,14 @@
-import Header from "./components/Header";
-import HeroHostel from "./components/HeroHostel";
+import MainHeroLayout from "../layouts/MainHeroLayout";
 
 export default function HomePage() {
   return (
-    <>
-      <Header />
-      <main>
-        <HeroHostel />
-      </main>
-    </>
+    <MainHeroLayout>
+      <div>
+        {/* El resto del contenido de la home va aquí */}
+        <p style={{ textAlign: "center", marginTop: 40, color: "#333" }}>
+          Bienvenido a la comunidad de viajeros.
+        </p>
+      </div>
+    </MainHeroLayout>
   );
 }
