@@ -5,7 +5,7 @@ import HostelGrid from "./components/HostelMosaic";
 export default function HomePage() {
   return (
     <>
-      {/* HERO: SIN Container */}
+      {/* HERO: SIN Container, como estaba originalmente */}
       <section
         style={{
           background: "linear-gradient(135deg, #8816c0 0%, #8f3985 100%)",
