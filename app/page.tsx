@@ -16,9 +16,7 @@ export default function HomePage() {
       <Container>
         <HostelGrid />
       </Container>
-      <Container>
-        <Footer />
-      </Container>
+    
     </>
   );
 }
