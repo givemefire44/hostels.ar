@@ -7,30 +7,37 @@ export default function MainHeroLayout({ children }) {
       style={{
         background: "linear-gradient(135deg, #8816c0 0%, #8f3985 100%)",
         padding: "48px 0 32px 0",
-        marginTop: 10,
-        borderRadius: 28, // Hero radius para esquinas redondeadas
+        borderRadius: 28,
         boxShadow: "0 8px 32px rgba(80,0,80,0.10)"
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
-        <h1 style={{
-          color: "#fff700", // Amarillo intenso
-          fontSize: "3rem",
-          marginBottom: 8,
-          fontWeight: 700,
-          letterSpacing: 1,
-          transform: "translateY(30px)", // desplazamiento vertical
-          textShadow: "0 2px 10px rgba(0,0,0,0.10)"
-        }}>
+        <h1
+          style={{
+            color: "#fff700",
+            fontSize: "3rem",
+            marginBottom: 8,
+            fontWeight: 700,
+            letterSpacing: 1,
+            marginLeft: 30,
+            marginTop: 0,
+            transform: "translateY(-15px)",
+            textShadow: "0 2px 10px rgba(0,0,0,0.10)"
+          }}
+        >
           Conoce gente.
         </h1>
-        <h2 style={{
-          color: "#fff",
-          fontSize: "1.5rem",
-          fontWeight: 500,
-          marginBottom: 32,
-          transform: "translateY(30px)"
-        }}>
+        <h2
+          style={{
+            color: "#fff700",
+            fontSize: "1.5rem",
+            fontWeight: 500,
+            marginBottom: 32,
+            marginLeft: 30,
+            marginTop: 0,
+            transform: "translateY(-15px)"
+          }}
+        >
           ¡Elige dónde quedarte y te mostraremos con quién!
         </h2>
         <BubbleComments
@@ -46,18 +53,18 @@ export default function MainHeroLayout({ children }) {
         </div>
         <div
           style={{
-            color: "#181818", // Letras en negro
+            color: "#181818",
             fontWeight: 700,
             marginTop: 24,
-            background: "#ffe600", // Amarillo intenso
-            padding: "10px 28px",
-            borderRadius: 12,
+            padding: "10px 0 0 0",
             display: "block",
             textAlign: "center",
             fontSize: 18,
-            maxWidth: 420,
+            maxWidth: 600,
             marginLeft: "auto",
-            marginRight: "auto"
+            marginRight: "auto",
+            background: "none",
+            borderRadius: 0
           }}
         >
           Cancelación gratuita y reservación flexible disponibles
