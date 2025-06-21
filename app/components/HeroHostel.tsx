@@ -40,27 +40,20 @@ export default function HeroHostel() {
         </div>
         <div className="hero-search-outer">
           <form className="hero-search-form">
-            <input type="text" placeholder="¿A dónde quieres ir?" />
-            <div className="hero-search-field">
-              <span>Llegada</span>
-              <span>21 jun</span>
-            </div>
-            <div className="hero-search-field">
-              <span>Salida</span>
-              <span>24 jun</span>
-            </div>
-            <div className="hero-search-field">
-              <span>Personas</span>
-              <span>2</span>
-            </div>
+            <input
+              type="text"
+              placeholder="¿A dónde quieres ir?"
+              className="hero-search-input"
+              autoComplete="off"
+            />
             <button type="submit" className="hero-search-btn">
-              ¡Vamos! <span>→</span>
+              Buscar
             </button>
           </form>
           <div className="hero-search-chips">
             <span>
               <span role="img" aria-label="calendar">📅</span> 
-              <b>Cancelación gratuita</b> y <b>reservacion flexible</b> disponibles
+              <b>Cancelación gratuita</b> y <b>reservación flexible</b> disponibles
             </span>
           </div>
         </div>
