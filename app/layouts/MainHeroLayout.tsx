@@ -5,13 +5,13 @@ export default function MainHeroLayout({ children }) {
   return (
     <section
       style={{
-        background: "linear-gradient(135deg, #8816c0 0%, #8f3985 100%)",
+        background: "#fff", // Fondo blanco
         padding: "48px 0 32px 0",
         borderRadius: 28,
         boxShadow: "0 8px 32px rgba(80,0,80,0.10)"
       }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", position: "relative" }}>
         <h1
           style={{
             color: "#fff700",
