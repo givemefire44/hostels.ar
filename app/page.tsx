@@ -1,4 +1,4 @@
-import MainHeroLayout from "./components/MainHeroLayout";
+import MainHeroLayout from "./layouts/MainHeroLayout";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import HostelGrid from "./components/HostelMosaic";
 
