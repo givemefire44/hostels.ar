@@ -1,13 +1,24 @@
-import MainHeroLayout from "./layouts/MainHeroLayout";
+import Container from "./components/Container";
+import MainHeroLayout from "./layout/MainHeroLayout";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import HostelGrid from "./components/HostelMosaic";
+import Footer from "./components/Footer";
 
 export default function HomePage() {
   return (
     <>
-      <MainHeroLayout />
-      <TestimonialCarousel />
-      <HostelGrid />
+      <Container>
+        <MainHeroLayout />
+      </Container>
+      <Container>
+        <TestimonialCarousel />
+      </Container>
+      <Container>
+        <HostelGrid />
+      </Container>
+      <Container>
+        <Footer />
+      </Container>
     </>
   );
 }
