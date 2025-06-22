@@ -1,5 +1,5 @@
 import Container from "./components/Container";
-import MainHeroLayout from "./layouts/MainHeroLayout";
+import MainHeroLayout from "./components/HeroHostel";
 import TestimonialCarousel from "./components/TestimonialCarousel";
 import HostelGrid from "./components/HostelMosaic";
 import Footer from "./components/Footer";
