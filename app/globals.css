@@ -24,3 +24,93 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* ---- HERO CUSTOM CLASSES ---- */
+
+/* Hero: diseño desktop por defecto */
+.hero-section {
+  border-radius: 28px;
+  padding: 48px 0 32px 0;
+  box-shadow: 0 8px 32px rgba(80,0,80,0.10);
+  background: linear-gradient(135deg, #8816c0 0%, #8f3985 100%);
+}
+
+/* Títulos del hero */
+.hero-title {
+  color: #fff700;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-left: 30px;
+  margin-bottom: 8px;
+  margin-top: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.10);
+}
+.hero-subtitle {
+  color: #fff700;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 32px;
+  margin-left: 30px;
+  margin-top: 0;
+}
+
+/* Burbujas: horizontal por defecto */
+.bubble-comments {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Buscador: ancho y padding normal */
+.city-search-container {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Texto de cancelación */
+.cancellation-text {
+  color: #fff700;
+  font-weight: 700;
+  margin-top: 24px;
+  text-align: center;
+  font-size: 18px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* RESPONSIVE PARA MOVIL: menos de 600px */
+@media (max-width: 600px) {
+  .hero-section {
+    border-radius: 16px;
+    padding: 18px 0 16px 0;
+  }
+  .hero-title,
+  .hero-subtitle {
+    margin-left: 0;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 6px;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 22px;
+  }
+  .bubble-comments {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .city-search-container {
+    margin-top: 18px;
+  }
+  .cancellation-text {
+    font-size: 15px;
+    margin-top: 16px;
+    max-width: 95%;
+  }
+}
