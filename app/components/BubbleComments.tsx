@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 
 // Puedes cambiar estos links por tus propios avatares cuando quieras
 const avatars = [
@@ -10,48 +10,18 @@ const avatars = [
 
 export default function BubbleComments({ comments }) {
   return (
-    <div style={{
-      display: "flex",
-      gap: 28,
-      justifyContent: "center",
-      marginBottom: 32,
-      flexWrap: "wrap"
-    }}>
+    <div className="bubble-comments">
       {comments.map((comment, idx) => (
         <div
           key={idx}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            minWidth: 130
-          }}
+          className="bubble-comment"
         >
           <img
             src={avatars[idx % avatars.length]}
             alt="avatar"
-            style={{
-              width: 54,
-              height: 54,
-              borderRadius: "50%",
-              objectFit: "cover",
-              boxShadow: "0 2px 10px #0002",
-              border: "2.5px solid #fff",
-              marginBottom: 8,
-            }}
+            className="bubble-avatar"
           />
-          <div style={{
-            background: "#fff",
-            color: "#7e2fbf",
-            borderRadius: 18,
-            padding: "8px 18px",
-            fontSize: "1.05rem",
-            fontWeight: 500,
-            boxShadow: "0 2px 10px #0002",
-            maxWidth: 180,
-            textAlign: "center",
-            border: "1.5px solid #e8e1ef",
-          }}>
+          <div className="bubble-text">
             {comment.text}
           </div>
         </div>
