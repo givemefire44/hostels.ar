@@ -65,6 +65,7 @@ body {
   text-align: left;
 }
 
+
 /* CitySearch margin */
 .city-search-container {
   margin-top: 32px;
@@ -118,4 +119,148 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+
+/* ---- CitySearch styles ---- */
+.search-bar-wrap {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 4;
+}
+.search-bar.vedette {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 5px 32px #0001;
+  padding: 14px 18px 14px 22px;
+  gap: 10px;
+  min-height: 64px;
+}
+.search-icon {
+  display: flex;
+}
+.search-input {
+  flex: 1 1 0%;
+  border: none;
+  outline: none;
+  font-size: 1.32rem;
+  background: none;
+  padding: 19px 9px 18px 9px;
+  font-weight: 400;
+}
+.clear-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-right: 1px;
+  display: flex;
+  align-items: center;
+}
+.vamos-btn.maize {
+  background: #ffe236;
+  color: #6b4700;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.21rem;
+  font-weight: 800;
+  padding: 12px 40px;
+  margin: 0 0 0 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 6px #0001;
+  transition: background 0.16s, color 0.16s;
+}
+.vamos-btn.maize:disabled {
+  background: #eee;
+  color: #bbb;
+  cursor: not-allowed;
+}
+.vamos-btn.maize:hover:not(:disabled) {
+  background: #ffb700;
+  color: #fff;
+}
+.dropdown {
+  position: absolute;
+  left: 0;
+  top: 110%;
+  width: 100%;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 #0003;
+  z-index: 30;
+  margin-top: 7px;
+  padding: 0;
+  list-style: none;
+  max-height: 275px;
+  overflow-y: auto;
+}
+.dropdown li {
+  padding: 0;
+  margin: 0 9px;
+}
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 12px;
+  border-radius: 10px;
+  transition: background 0.13s, border 0.13s;
+  position: relative;
+  border: 2px solid transparent;
+  background: none;
+}
+.item-row.hovered {
+  background: #f0f4fa;
+  border: 2px solid #8f2fbf;
+}
+.item-row.selected {
+  font-weight: bold;
+  color: #5e1f8a;
+}
+.city-icon {
+  font-size: 1.25em;
+}
+.dropdown .city-name {
+  color: #2d2d2d;
+}
+.dropdown .city-name.bold {
+  color: #5e1f8a;
+}
+.city-name {
+  font-size: 1.09em;
+  font-weight: 500;
+}
+.city-name.bold {
+  font-weight: bold;
+}
+.city-props {
+  color: #888;
+  margin-left: auto;
+  font-size: 0.99em;
+}
+.selected-check {
+  margin-left: 8px;
+  display: flex;
+}
+/* Responsive */
+@media (max-width: 900px) {
+  .search-bar-wrap {
+    max-width: 98vw;
+  }
+}
+@media (max-width: 600px) {
+  .search-bar.vedette {
+    flex-direction: column;
+    padding: 14px 7px;
+  }
+  .vamos-btn.maize {
+    margin: 12px 0 0 0;
+    width: 100%;
+  }
+  .search-bar-wrap {
+    max-width: 100vw;
+  }
 }
