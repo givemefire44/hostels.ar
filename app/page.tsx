@@ -9,7 +9,7 @@ export default function HomePage() {
     <>
      
       <Container>
-        <MainHeroLayout />
+        <HeroHostel />
       </Container>
       <Container>
         <TestimonialCarousel />
