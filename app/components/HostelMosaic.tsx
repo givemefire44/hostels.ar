@@ -54,73 +54,47 @@ const hostels = [
   },
 ];
 
+function getCardClass(i) {
+  let classes = "hostel-mosaic-card";
+  if (i % 3 === 0) classes += " mt-24";
+  if (i % 3 === 2) classes += " mb-24";
+  if (i % 2 === 0) classes += " rotate-neg";
+  else classes += " rotate-pos";
+  return classes;
+}
+
+function getCardStyle(i) {
+  // Reemplazamos el rotate dinámico por uno fijo para evitar hydration errors.
+  // Si quieres que sea random pero sin hydration, hazlo solo en el cliente con useEffect.
+  return {
+    transform: i % 2 === 0 ? "rotate(-8deg)" : "rotate(8deg)"
+  };
+}
+
 export default function HostelMosaic() {
   return (
-    <div style={{
-      position: "relative",
-      width: "100%",
-      minHeight: 420,
-      margin: "64px 0",
-      padding: "32px 0"
-    }}>
-      <div style={{
-        maxWidth: 1200,
-        margin: "0 auto",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 32,
-        justifyContent: "center",
-        position: "relative",
-      }}>
-        <div style={{
-          flex: "1 1 380px",
-          minWidth: 320,
-          maxWidth: 420,
-          alignSelf: "center",
-        }}>
-          <h2 style={{ fontSize: "2.2rem", fontWeight: 800, marginBottom: 12, lineHeight: 1.1 }}>
+    <div className="hostel-mosaic-section">
+      <div className="hostel-mosaic-container">
+        <div className="hostel-mosaic-info">
+          <h2>
             Los mejores hostels del mundo,<br />
-            con más de <span style={{ color: "#22c55e" }}>13 millones de reseñas.</span>
+            con más de <span className="highlight">13 millones de reseñas.</span>
           </h2>
-          <div style={{ fontSize: "1.1rem", color: "#333", marginBottom: 24 }}>
+          <div className="hostel-mosaic-info-description">
             Con más de 16.500 hostels en 180 países, ¡siempre hay espacio para una nueva aventura!
           </div>
         </div>
-        <div style={{
-          flex: "2 1 600px",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 24,
-          justifyContent: "center",
-          alignItems: "flex-start"
-        }}>
+        <div className="hostel-mosaic-list">
           {hostels.slice(0,9).map((h, i) => (
             <div
               key={h.name}
-              style={{
-                width: 140,
-                height: 140,
-                borderRadius: 20,
-                overflow: "hidden",
-                background: "#fff",
-                boxShadow: "0 2px 16px #0001",
-                transform: `rotate(${(i%2===0?-1:1)*(5 + Math.random()*6)}deg)`,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                marginTop: i%3===0 ? 24 : 0,
-                marginBottom: i%3===2 ? 24 : 0,
-                transition: "transform .2s",
-              }}
+              className={getCardClass(i)}
+              style={getCardStyle(i)}
             >
-              <img src={h.img} alt={h.name} style={{
-                width: "100%",
-                height: "70%",
-                objectFit: "cover"
-              }}/>
-              <div style={{ padding: "8px 10px 8px 10px" }}>
-                <div style={{ fontWeight: 700, fontSize: 16 }}>{h.name}</div>
-                <div style={{ color: "#555", fontSize: 13 }}>{h.location}</div>
+              <img src={h.img} alt={h.name} />
+              <div className="hostel-mosaic-card-content">
+                <div className="hostel-mosaic-card-title">{h.name}</div>
+                <div className="hostel-mosaic-card-location">{h.location}</div>
               </div>
             </div>
           ))}
