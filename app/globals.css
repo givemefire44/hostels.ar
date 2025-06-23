@@ -254,48 +254,56 @@ body {
     padding: 4px;
     border-radius: 18px;
     background: #fff;
+    border: 2px solid #B9C4D3; /* borde contenedor */
     width: 100%;
     max-width: 98vw;
-    overflow-x: hidden;
-  }
-  .search-bar-input {
-    flex: 1 1 0%;
-    min-width: 0;
-    font-size: 1rem;
-    height: 40px;
-    border: none;
-    outline: none;
-    padding: 0 8px;
-    background: transparent;
-    border-radius: 13px 0 0 13px;
+    overflow: hidden;
+    box-sizing: border-box;
   }
   .search-bar-icon {
-    margin-right: 6px;
+    margin-right: 4px;
     margin-left: 2px;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    width: 32px;
+    justify-content: center;
+  }
+  .search-bar-input {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 1rem;
+    height: 38px;
+    border: none;
+    outline: none;
+    padding: 0 4px;
+    background: transparent;
+    /* Ellipsis */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #5b6f89;
   }
   .vamos-btn.maize {
     flex-shrink: 0;
-    width: 40px;
-    min-width: 36px;
-    height: 40px;
-    border-radius: 0 13px 13px 0;
-    background: #FFD600 !important;
-    color: #18120b !important;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: #FA5D1C !important; /* naranja como tu ejemplo */
+    color: #fff !important;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
+    margin-left: 0;
     padding: 0;
     box-shadow: none;
     position: relative;
-    margin-left: 0;
   }
-  .vamos-btn.maize .buscar-text {
+  .buscar-text {
     display: none !important;
   }
-  .vamos-btn.maize .buscar-arrow {
+  .buscar-arrow {
     display: block !important;
     width: 24px;
     height: 24px;
@@ -307,17 +315,16 @@ body {
     margin: auto;
   }
 }
-
-/* Para pantallas MUY chicas (<340px) aún más responsive */
+/* Opcional: aún más responsivo para <340px */
 @media (max-width: 340px) {
   .search-bar-input {
-    font-size: 0.92rem;
-    padding: 0 4px;
+    font-size: 0.88rem;
+    padding: 0 1px;
   }
   .vamos-btn.maize {
-    width: 32px;
-    min-width: 28px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
   }
   .buscar-arrow svg {
     width: 15px !important;
@@ -325,10 +332,10 @@ body {
   }
 }
 @media (min-width: 601px) {
-  .vamos-btn.maize .buscar-arrow {
+  .buscar-arrow {
     display: none !important;
   }
-  .vamos-btn.maize .buscar-text {
+  .buscar-text {
     display: inline !important;
   }
 }
