@@ -98,13 +98,19 @@ export default function CitySearch() {
             </svg>
           </button>
         )}
-        <button
-          className="vamos-btn maize"
-          type="submit"
-          disabled={!busqueda}
-        >
-          ¡Buscar!
-        </button>
+       <button
+  className="vamos-btn maize"
+  type="submit"
+  disabled={!busqueda}
+>
+  <span className="buscar-text">¡Buscar!</span>
+  <span className="buscar-arrow" aria-hidden="true">
+    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" stroke="#18120b" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="5" y1="12.5" x2="19" y2="12.5"/>
+      <polyline points="12.5,6 19,12.5 12.5,19"/>
+    </svg>
+  </span>
+</button>
       </div>
       {show && filtradas.length > 0 &&
         <ul className="dropdown">
