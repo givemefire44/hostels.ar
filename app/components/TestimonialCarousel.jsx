@@ -20,35 +20,20 @@ export default function TestimonialCarousel() {
   const [active, setActive] = useState(0);
 
   return (
-    <div style={{
-      background: "#fff",
-      borderRadius: 16,
-      boxShadow: "0 2px 16px #0001",
-      maxWidth: 540,
-      margin: "48px auto",
-      padding: 32,
-      textAlign: "center",
-      position: "relative"
-    }}>
-      <blockquote style={{ fontSize: "1.3rem", fontStyle: "italic", color: "#7e2fbf" }}>
+    <div className="testimonial-carousel">
+      <blockquote>
         “{testimonials[active].quote}”
       </blockquote>
-      <div style={{ marginTop: 12, color: "#444", fontWeight: 600 }}>
+      <div className="testimonial-carousel-author">
         — {testimonials[active].author}
       </div>
-      <div style={{ marginTop: 24 }}>
+      <div className="testimonial-carousel-dots">
         {testimonials.map((_, i) => (
           <button
             key={i}
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              margin: "0 6px",
-              background: i === active ? "#7e2fbf" : "#e0d4ef",
-              border: "none",
-              cursor: "pointer"
-            }}
+            className={
+              "testimonial-carousel-dot" + (i === active ? " active" : "")
+            }
             onClick={() => setActive(i)}
             aria-label={`Show testimonial ${i + 1}`}
           />
