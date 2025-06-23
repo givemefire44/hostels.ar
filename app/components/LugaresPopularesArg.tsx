@@ -13,7 +13,7 @@ const lugares = [
   },
   {
     nombre: "Rosario",
-    img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", // Imagen genérica
+    img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
     url: "#",
   },
   {
@@ -50,12 +50,12 @@ export default function LugaresPopularesArg() {
       <p className="lugares-populares-desc">
         Descubrí los lugares más populares de Argentina para vivir aventuras inolvidables.
       </p>
-      <div className="lugares-populares-grid">
-        {lugares.map((lugar) => (
+      <div className="lugares-populares-masonry">
+        {lugares.map((lugar, i) => (
           <a
             href={lugar.url}
             key={lugar.nombre}
-            className="lugar-card"
+            className={`lugar-card-masonry lugar-card-masonry-${i + 1}`}
             aria-label={`Ver más de ${lugar.nombre}`}
           >
             <img src={lugar.img} alt={lugar.nombre} loading="lazy" />
