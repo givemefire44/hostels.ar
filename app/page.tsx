@@ -20,7 +20,9 @@ export default function HomePage() {
       <Container>
         <HostelGrid />
       </Container>
+      <Container>
      <ImpactBanner />
+      </Container>
       <Container>
   <LugaresPopularesArg />
       </Container>
