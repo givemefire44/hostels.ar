@@ -4,6 +4,7 @@ import TestimonialCarousel from "./components/TestimonialCarousel";
 import HostelGrid from "./components/HostelMosaic";
 import Footer from "./components/Footer";
 import ImpactBanner from "./components/ImpactBanner";
+import LugaresPopularesArg from "./components/LugaresPopularesArg";
 
 
 export default function HomePage() {
@@ -20,6 +21,9 @@ export default function HomePage() {
         <HostelGrid />
       </Container>
      <ImpactBanner />
+      <Container>
+  <LugaresPopularesArg />
+      </Container>
       <Container>
       <Footer />
       </Container>
