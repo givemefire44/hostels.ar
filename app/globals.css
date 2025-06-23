@@ -490,3 +490,67 @@ body {
     border-radius: 14px;
   }
 }
+
+
+/* ImpactBanner styles */
+.impact-banner {
+  background: #7e2fbf;
+  color: #FFD600;
+  width: 100vw;
+  position: relative;
+  margin: 0;
+  padding: 54px 0 38px 0;
+  /* Franja inclinada usando clip-path */
+  clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.impact-banner-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.impact-banner h2 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin: 0 0 12px 0;
+}
+
+.impact-banner h2 span {
+  color: #FFD600;
+  background: rgba(0,0,0,0.08);
+  border-radius: 7px;
+  padding: 0 4px;
+}
+
+.impact-banner-arrow {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  animation: bounce-down 1.2s infinite;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(12px);}
+}
+
+@media (max-width: 600px) {
+  .impact-banner {
+    padding: 32px 0 18px 0;
+  }
+  .impact-banner h2 {
+    font-size: 1.22rem;
+  }
+  .impact-banner-arrow svg {
+    width: 28px;
+    height: 28px;
+  }
+}
