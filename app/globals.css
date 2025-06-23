@@ -554,3 +554,112 @@ body {
     height: 28px;
   }
 }
+
+
+/* --- Lugares Populares Arg --- */
+.lugares-populares {
+  max-width: 1100px;
+  margin: 48px auto 0 auto;
+  padding: 0 18px;
+}
+
+.lugares-populares h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.2em;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.lugares-populares-desc {
+  color: #555;
+  margin-bottom: 2.1em;
+  font-size: 1.1rem;
+}
+
+.lugares-populares-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(164px, 1fr));
+  gap: 32px 28px;
+  justify-items: center;
+}
+
+.lugar-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  width: 170px;
+  height: 240px;
+  box-shadow: 0 2px 16px #0002;
+  transition: transform .16s, box-shadow .16s;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  background: #fff;
+  text-decoration: none;
+}
+
+.lugar-card:hover {
+  transform: scale(1.045);
+  box-shadow: 0 6px 22px #0003;
+}
+
+.lugar-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #eee;
+}
+
+.lugar-card-titulo {
+  position: absolute;
+  top: 13px;
+  left: 0;
+  right: 0;
+  background: rgba(20,16,36,0.79);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.17rem;
+  padding: 4px 14px 4px 10px;
+  border-radius: 12px 12px 18px 0;
+  text-align: left;
+  width: max-content;
+  min-width: 82px;
+  margin-left: 10px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px #0002;
+}
+
+@media (max-width: 700px) {
+  .lugares-populares-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 8px;
+  }
+  .lugar-card {
+    width: 44vw;
+    max-width: 170px;
+    height: 36vw;
+    min-height: 155px;
+  }
+}
+@media (max-width: 480px) {
+  .lugares-populares h2 {
+    font-size: 1.14rem;
+  }
+  .lugares-populares-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 4px;
+  }
+  .lugar-card {
+    width: 44vw;
+    min-width: 110px;
+    height: 35vw;
+    min-height: 90px;
+    border-radius: 15px;
+  }
+  .lugar-card-titulo {
+    font-size: .96rem;
+    padding: 3px 10px 3px 7px;
+    border-radius: 9px 9px 13px 0;
+  }
+}
