@@ -311,8 +311,8 @@ body {
     height: 24px;
   }
   .buscar-arrow svg {
-    width: 22px !important;
-    height: 22px !important;
+    width: 16px !important;
+    height: 16px !important;
     display: block;
     margin: 0 auto;
     vertical-align: middle;
