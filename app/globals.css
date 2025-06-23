@@ -314,7 +314,8 @@ body {
     width: 22px !important;
     height: 22px !important;
     display: block;
-    margin: auto;
+    margin: 0 auto;
+    vertical-align: middle;
   }
 }
 /* Opcional: aún más responsivo para <340px */
