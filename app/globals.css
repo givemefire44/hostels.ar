@@ -285,25 +285,34 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    font-weight: bold;
     border: none;
     padding: 0;
     box-shadow: none;
+    position: relative;
   }
-  .vamos-btn.maize .arrow {
-    font-size: 2rem;
-    font-weight: 900;
-    color: #18120b;
-    line-height: 1;
-    font-family: inherit;
-    pointer-events: none;
-    display: block;
-  }
-  /* Oculta cualquier otro texto dentro del botón en mobile */
-  .vamos-btn.maize .btn-text, 
-  .vamos-btn.maize span:not(.arrow) {
+  /* Muestra solo la flecha SVG, oculta todo texto adentro del botón en mobile */
+  .vamos-btn.maize .buscar-text {
     display: none !important;
+  }
+  .vamos-btn.maize .buscar-arrow {
+    display: block !important;
+    width: 25px;
+    height: 25px;
+  }
+  /* Opcional: mejora el tamaño y el centrado de la flecha SVG */
+  .buscar-arrow svg {
+    width: 25px !important;
+    height: 25px !important;
+    display: block;
+    margin: auto;
+  }
+}
+@media (min-width: 601px) {
+  .vamos-btn.maize .buscar-arrow {
+    display: none !important;
+  }
+  .vamos-btn.maize .buscar-text {
+    display: inline !important;
   }
 }
 
