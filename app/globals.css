@@ -269,21 +269,23 @@ body {
     width: 32px;
     justify-content: center;
   }
-  .search-bar-input {
-    flex: 1 1 0;
-    min-width: 0;
-    font-size: 1rem;
-    height: 38px;
-    border: none;
-    outline: none;
-    padding: 0 4px;
-    background: transparent;
-    /* Ellipsis */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #5b6f89;
-  }
+  .search-input {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 1rem;
+  height: 38px;
+  border: none;
+  outline: none;
+  padding: 0 8px;
+  background: transparent;
+  border-radius: 13px 0 0 13px;
+  color: #5b6f89;
+
+  /* Ellipsis para truncado */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   .vamos-btn.maize {
     flex-shrink: 0;
     width: 44px;
