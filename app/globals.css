@@ -249,10 +249,10 @@ body {
 @media (max-width: 600px) {
   .search-bar.vedette {
     display: flex;
-    flex-direction: row; /* fila! */
+    flex-direction: row;
     align-items: center;
-    padding: 6px 6px;
-    border-radius: 40px;
+    padding: 6px;
+    border-radius: 18px;
     background: #fff;
     box-shadow: 0 2px 16px #0001;
     width: 100%;
@@ -262,46 +262,44 @@ body {
   .search-bar.vedette input {
     flex: 1;
     font-size: 1rem;
-    height: 42px;
+    height: 44px;
     border: none;
     outline: none;
     padding: 0 8px;
     background: transparent;
-    border-radius: 40px;
-  }
-  .search-bar-icon {
-    margin-right: 7px;
-    margin-left: 2px;
-    display: flex;
-    align-items: center;
+    border-radius: 15px;
   }
   .vamos-btn.maize {
     margin: 0 0 0 6px;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     min-width: 0;
-    border-radius: 50%;
+    border-radius: 13px;
     background: #FFD600 !important;
-    color: #3c2b00 !important;
+    color: #18120b !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 2rem;
     font-weight: bold;
     box-shadow: none;
     border: none;
     padding: 0;
   }
-  .vamos-btn.maize span,
-  .vamos-btn.maize::after,
-  .vamos-btn.maize::before {
+  /* Oculta texto "Buscar" en mobile */
+  .vamos-btn.maize span, 
+  .vamos-btn.maize .btn-text {
     display: none;
   }
+  /* Flecha robusta adentro del botón */
   .vamos-btn.maize::before {
     content: "→";
+    font-size: 2rem;
+    font-weight: 900;
+    color: #18120b;
     display: block;
-    font-size: 1.45rem;
-    color: #3c2b00;
+    line-height: 1;
+    font-family: inherit; /* O prueba 'Arial Black', 'Segoe UI', 'sans-serif' para más grosor */
   }
 }
 
