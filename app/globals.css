@@ -493,20 +493,20 @@ body {
 
 
 /* ImpactBanner styles */
+/* ImpactBanner styles (recto, dentro del container) */
 .impact-banner {
   background: #7e2fbf;
   color: #FFD600;
-  width: 100vw;
-  position: relative;
-  margin: 0;
+  width: 100%;
+  margin: 0 auto 0 auto;
   padding: 54px 0 38px 0;
-  /* Franja inclinada usando clip-path */
-  clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);
-  overflow: hidden;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .impact-banner-content {
+  width: 100%;
   max-width: 860px;
   margin: 0 auto;
   padding: 0 16px;
