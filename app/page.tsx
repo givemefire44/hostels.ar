@@ -22,7 +22,7 @@ export default function HomePage() {
       </Container>
       <Container>
      <ImpactBanner />
-      </Container>
+        </ Container>
       <Container>
   <LugaresPopularesArg />
       </Container>
