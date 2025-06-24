@@ -305,18 +305,21 @@ body {
   .buscar-text {
     display: none !important;
   }
-  .buscar-arrow {
-    display: block !important;
-    width: 24px;
-    height: 24px;
-  }
-  .buscar-arrow svg {
-    width: 16px !important;
-    height: 16px !important;
-    display: block;
-    margin: 0 auto;
-    vertical-align: middle;
-  }
+ .buscar-arrow {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.buscar-arrow svg {
+  width: 16px !important;
+  height: 16px !important;
+  display: block;
+  margin: 0;
+  vertical-align: middle;
+}
 }
 /* Opcional: aún más responsivo para <340px */
 @media (max-width: 340px) {
