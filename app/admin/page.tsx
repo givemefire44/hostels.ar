@@ -236,6 +236,17 @@ export default function NuevaEntradaPage() {
         >
           ❌🔗
         </button>
+        <button
+  type="button"
+  onClick={() => {
+    const url = prompt("Pegá la URL de la imagen");
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
+    }
+  }}
+>
+  🖼️ Imagen
+</button>
       </div>
     );
   }
