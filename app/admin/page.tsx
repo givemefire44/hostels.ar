@@ -1,14 +1,31 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
-const PASSWORD = 'admin123'; // Puedes cambiar la contraseña aquí
+const PASSWORD = "admin123"; // Puedes cambiar la contraseña aquí
 
 export default function AdminPage() {
   const [auth, setAuth] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
 
+  // Campos del formulario de post
+  const [titulo, setTitulo] = useState("");
+  const [slug, setSlug] = useState("");
+  const [imagen, setImagen] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [guardando, setGuardando] = useState(false);
+
+  // Editor Tiptap
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: "",
+  });
+
+  // Lógica de login
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (input === PASSWORD) {
@@ -17,6 +34,39 @@ export default function AdminPage() {
     } else {
       setError('Contraseña incorrecta');
     }
+  };
+
+  // Lógica para guardar post
+  const guardarEntrada = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setGuardando(true);
+    setMensaje("");
+
+    if (!titulo || !slug || !editor?.getHTML()) {
+      setMensaje("Por favor, completa todos los campos.");
+      setGuardando(false);
+      return;
+    }
+
+    const { error } = await supabase.from("posts").insert([
+      {
+        titulo,
+        contenido: editor.getHTML(),
+        slug,
+        imagen,
+      },
+    ]);
+
+    if (error) {
+      setMensaje("Error al guardar: " + error.message);
+    } else {
+      setMensaje("¡Entrada guardada!");
+      setTitulo("");
+      setSlug("");
+      setImagen("");
+      editor?.commands.setContent("");
+    }
+    setGuardando(false);
   };
 
   if (!auth) {
@@ -39,11 +89,50 @@ export default function AdminPage() {
     );
   }
 
-  // Si está autenticado, muestra el admin real
+  // Si está autenticado, muestra el panel de creación de posts
   return (
-    <main style={{ padding: 32 }}>
+    <main style={{ padding: 32, maxWidth: 700, margin: "0 auto" }}>
       <h1>Panel de Administración</h1>
-      <p>¡Acceso concedido! Aquí irán las herramientas de creación de contenido.</p>
+      <form onSubmit={guardarEntrada} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <input
+          type="text"
+          placeholder="Título"
+          value={titulo}
+          onChange={e => setTitulo(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Slug (url única)"
+          value={slug}
+          onChange={e => setSlug(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Imagen (URL)"
+          value={imagen}
+          onChange={e => setImagen(e.target.value)}
+        />
+        <div>
+          <label>Contenido:</label>
+          <div
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: 4,
+              minHeight: 150,
+              padding: 8,
+              marginTop: 4,
+            }}
+          >
+            <EditorContent editor={editor} />
+          </div>
+        </div>
+        <button type="submit" disabled={guardando}>
+          {guardando ? "Guardando..." : "Guardar entrada"}
+        </button>
+        {mensaje && <div style={{ color: mensaje.startsWith("¡") ? "green" : "red" }}>{mensaje}</div>}
+      </form>
     </main>
   );
 }
