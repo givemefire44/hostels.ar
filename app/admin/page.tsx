@@ -248,34 +248,34 @@ export default function NuevaEntradaPage() {
   🖼️ Imagen
 </button>
  <input
-        type="file"
-        accept="image/*"
-        style={{ display: "none" }}
-        id="upload-image"
-        onChange={async (e) => {
-          const file = e.target.files?.[0];
-          if (!file) return;
-          const filePath = `blog/${Date.now()}-${file.name}`;
-          const { data, error } = await supabase.storage
-            .from("blog-images")
-            .upload(filePath, file);
-          if (error) {
-            alert("Error al subir la imagen: " + error.message);
-            return;
-          }
-          const { data: urlData } = supabase.storage
-            .from("blog-images")
-            .getPublicUrl(filePath);
-          if (urlData?.publicUrl) {
-            editor.chain().focus().setImage({ src: urlData.publicUrl }).run();
-          } else {
-            alert("No se pudo obtener la URL pública.");
-          }
-        }}
-      />
-      <label htmlFor="upload-image">
-        <button type="button" style={{ cursor: "pointer" }}>⬆️ Subir imagen</button>
-      </label>
+  type="file"
+  accept="image/*"
+  style={{ display: "none" }}
+  id="upload-image"
+  onChange={async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const filePath = `blog/${Date.now()}-${file.name}`;
+    const { data, error } = await supabase.storage
+      .from("blog-images")
+      .upload(filePath, file);
+    if (error) {
+      alert("Error al subir la imagen: " + error.message);
+      return;
+    }
+    const { data: urlData } = supabase.storage
+      .from("blog-images")
+      .getPublicUrl(filePath);
+    if (urlData?.publicUrl) {
+      editor.chain().focus().setImage({ src: urlData.publicUrl }).run();
+    } else {
+      alert("No se pudo obtener la URL pública.");
+    }
+  }}
+/>
+<label htmlFor="upload-image" style={{ cursor: "pointer", padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4 }}>
+  ⬆️ Subir imagen
+</label>
         
       </div>
     );
