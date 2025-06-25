@@ -14,6 +14,8 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import ListItem from "@tiptap/extension-list-item";
 import Blockquote from "@tiptap/extension-blockquote";
 import CodeBlock from "@tiptap/extension-code-block";
+import Image from "@tiptap/extension-image";
+
 
 const PASSWORD = "admin123";
 
@@ -63,6 +65,7 @@ export default function NuevaEntradaPage() {
       ListItem,
       Blockquote,
       CodeBlock,
+      Image, 
     ],
     content: "",
   });
