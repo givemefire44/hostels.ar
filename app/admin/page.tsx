@@ -28,7 +28,7 @@ function slugify(str: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-export default function AdminPage() {
+export default function NuevaEntradaPage() {
   const [auth, setAuth] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
