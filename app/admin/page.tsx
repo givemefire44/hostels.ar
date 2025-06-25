@@ -4,8 +4,18 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import Heading from "@tiptap/extension-heading";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import ListItem from "@tiptap/extension-list-item";
+import Blockquote from "@tiptap/extension-blockquote";
+import CodeBlock from "@tiptap/extension-code-block";
 
-const PASSWORD = "admin123"; // Puedes cambiar la contraseña aquí
+const PASSWORD = "admin123"; // Cambia esta contraseña si lo deseas
 
 export default function AdminPage() {
   const [auth, setAuth] = useState(false);
@@ -19,9 +29,21 @@ export default function AdminPage() {
   const [mensaje, setMensaje] = useState("");
   const [guardando, setGuardando] = useState(false);
 
-  // Editor Tiptap
+  // Editor Tiptap con barra de herramientas
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Bold,
+      Italic,
+      Underline,
+      Link,
+      Heading.configure({ levels: [1, 2, 3] }),
+      BulletList,
+      OrderedList,
+      ListItem,
+      Blockquote,
+      CodeBlock,
+    ],
     content: "",
   });
 
@@ -69,6 +91,73 @@ export default function AdminPage() {
     setGuardando(false);
   };
 
+  // Barra de herramientas para el editor
+  function Toolbar() {
+    if (!editor) return null;
+    return (
+      <div style={{
+        border: "1px solid #ddd",
+        borderRadius: 4,
+        marginBottom: 8,
+        padding: 6,
+        background: "#fafafa",
+        display: "flex",
+        gap: 6,
+        flexWrap: "wrap"
+      }}>
+        <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} style={{ fontWeight: editor.isActive('bold') ? "bold" : "normal" }}>
+          B
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} style={{ fontStyle: editor.isActive('italic') ? "italic" : "normal" }}>
+          I
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} style={{ textDecoration: editor.isActive('underline') ? "underline" : "none" }}>
+          U
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} style={{ fontWeight: editor.isActive('heading', { level: 1 }) ? "bold" : "normal" }}>
+          H1
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} style={{ fontWeight: editor.isActive('heading', { level: 2 }) ? "bold" : "normal" }}>
+          H2
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} style={{ fontWeight: editor.isActive('heading', { level: 3 }) ? "bold" : "normal" }}>
+          H3
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} style={{ fontWeight: editor.isActive('bulletList') ? "bold" : "normal" }}>
+          • Lista
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} style={{ fontWeight: editor.isActive('orderedList') ? "bold" : "normal" }}>
+          1. Lista
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} style={{ fontWeight: editor.isActive('blockquote') ? "bold" : "normal" }}>
+          “Cita”
+        </button>
+        <button type="button" onClick={() => editor.chain().focus().toggleCodeBlock().run()} style={{ fontWeight: editor.isActive('codeBlock') ? "bold" : "normal" }}>
+          {'</>'}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            const url = prompt('Pega la URL');
+            if (url) {
+              editor.chain().focus().setLink({ href: url }).run();
+            }
+          }}
+          style={{ fontWeight: editor.isActive('link') ? "bold" : "normal" }}
+        >
+          🔗
+        </button>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().unsetLink().run()}
+          disabled={!editor.isActive('link')}
+        >
+          ❌🔗
+        </button>
+      </div>
+    );
+  }
+
   if (!auth) {
     return (
       <main style={{ padding: 32, maxWidth: 360 }}>
@@ -89,7 +178,6 @@ export default function AdminPage() {
     );
   }
 
-  // Si está autenticado, muestra el panel de creación de posts
   return (
     <main style={{ padding: 32, maxWidth: 700, margin: "0 auto" }}>
       <h1>Panel de Administración</h1>
@@ -116,13 +204,15 @@ export default function AdminPage() {
         />
         <div>
           <label>Contenido:</label>
+          <Toolbar />
           <div
             style={{
               border: "1px solid #ccc",
               borderRadius: 4,
-              minHeight: 150,
+              minHeight: 180,
               padding: 8,
               marginTop: 4,
+              background: "#fff",
             }}
           >
             <EditorContent editor={editor} />
