@@ -15,7 +15,7 @@ import ListItem from "@tiptap/extension-list-item";
 import Blockquote from "@tiptap/extension-blockquote";
 import CodeBlock from "@tiptap/extension-code-block";
 import Image from "@tiptap/extension-image";
-
+import LoginForm from './components/LoginForm';
 
 const PASSWORD = "admin123";
 
