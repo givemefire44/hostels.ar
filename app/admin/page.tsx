@@ -71,22 +71,13 @@ export default function NuevaEntradaPage() {
   });
 
   // Lógica de login
-  export default function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      setError(error.message);
-    } else {
+    if (input === PASSWORD) {
+      setAuth(true);
       setError('');
-      // Aquí puedes redirigir o actualizar estado global de autenticación
+    } else {
+      setError('Contraseña incorrecta');
     }
   };
 
@@ -311,27 +302,24 @@ export default function NuevaEntradaPage() {
   }
 
   if (!auth) {
-     return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Ingresar</button>
-      {error && <p>{error}</p>}
-    </form>
-  );
-}
+    return (
+      <main style={{ padding: 32, maxWidth: 360 }}>
+        <h2>Login Admin</h2>
+        <form onSubmit={handleLogin}>
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            style={{ width: '100%', padding: 8, marginBottom: 8 }}
+            autoFocus
+          />
+          <button type="submit" style={{ width: '100%', padding: 8 }}>Entrar</button>
+        </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+      </main>
+    );
+  }
 
   return (
     <main style={{ padding: 32, maxWidth: 860, margin: "0 auto" }}>
