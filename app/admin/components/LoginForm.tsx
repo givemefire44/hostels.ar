@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
-export default function LoginForm() {
+// Recibe la función onAuth como prop
+export default function LoginForm({ onAuth }: { onAuth: () => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [auth, setAuth] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,32 +17,31 @@ export default function LoginForm() {
       setError(error.message);
     } else {
       setError('');
-      setAuth(true);
+      // Llama al padre: habilita el panel admin
+      onAuth();
     }
   };
 
-  if (!auth) {
-    return (
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Ingresar</button>
-        {error && <p>{error}</p>}
-      </form>
-    );
-  }
-
-  return <p>¡Bienvenido! Ya estás autenticado.</p>;
+  return (
+    <form onSubmit={handleLogin}>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+        style={{ fontSize: 16, padding: 8, display: "block", width: "100%", marginBottom: 12 }}
+      />
+      <input
+        type="password"
+        placeholder="Contraseña"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+        style={{ fontSize: 16, padding: 8, display: "block", width: "100%", marginBottom: 12 }}
+      />
+      <button type="submit" style={{ fontSize: 16, padding: "10px 20px", width: "100%" }}>Ingresar</button>
+      {error && <p style={{ color: 'red', marginTop: 8 }}>{error}</p>}
+    </form>
+  );
 }
