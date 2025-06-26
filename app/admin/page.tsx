@@ -17,8 +17,6 @@ import CodeBlock from "@tiptap/extension-code-block";
 import Image from "@tiptap/extension-image";
 import LoginForm from './components/LoginForm';
 
-const PASSWORD = "admin123";
-
 function slugify(str: string) {
   return str
     .toLowerCase()
@@ -31,9 +29,8 @@ function slugify(str: string) {
 }
 
 export default function NuevaEntradaPage() {
+  // Controla si el usuario está autenticado (vía LoginForm)
   const [auth, setAuth] = useState(false);
-  const [input, setInput] = useState('');
-  const [error, setError] = useState('');
 
   // Formulario de post
   const [titulo, setTitulo] = useState("");
@@ -65,21 +62,10 @@ export default function NuevaEntradaPage() {
       ListItem,
       Blockquote,
       CodeBlock,
-      Image, 
+      Image,
     ],
     content: "",
   });
-
-  // Lógica de login
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input === PASSWORD) {
-      setAuth(true);
-      setError('');
-    } else {
-      setError('Contraseña incorrecta');
-    }
-  };
 
   // Cargar posts al entrar
   useEffect(() => {
@@ -187,6 +173,7 @@ export default function NuevaEntradaPage() {
         gap: 6,
         flexWrap: "wrap"
       }}>
+        {/* ...Botones igual que antes... */}
         <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} style={{ fontWeight: editor.isActive('bold') ? "bold" : "normal" }}>
           B
         </button>
@@ -237,46 +224,45 @@ export default function NuevaEntradaPage() {
           ❌🔗
         </button>
         <button
-  type="button"
-  onClick={() => {
-    const url = prompt("Pegá la URL de la imagen");
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
-    }
-  }}
->
-  🖼️ Imagen
-</button>
- <input
-  type="file"
-  accept="image/*"
-  style={{ display: "none" }}
-  id="upload-image"
-  onChange={async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const filePath = `blog/${Date.now()}-${file.name}`;
-    const { data, error } = await supabase.storage
-      .from("blog-images")
-      .upload(filePath, file);
-    if (error) {
-      alert("Error al subir la imagen: " + error.message);
-      return;
-    }
-    const { data: urlData } = supabase.storage
-      .from("blog-images")
-      .getPublicUrl(filePath);
-    if (urlData?.publicUrl) {
-      editor.chain().focus().setImage({ src: urlData.publicUrl }).run();
-    } else {
-      alert("No se pudo obtener la URL pública.");
-    }
-  }}
-/>
-<label htmlFor="upload-image" style={{ cursor: "pointer", padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4 }}>
-  ⬆️ Subir imagen
-</label>
-        
+          type="button"
+          onClick={() => {
+            const url = prompt("Pegá la URL de la imagen");
+            if (url) {
+              editor.chain().focus().setImage({ src: url }).run();
+            }
+          }}
+        >
+          🖼️ Imagen
+        </button>
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          id="upload-image"
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const filePath = `blog/${Date.now()}-${file.name}`;
+            const { data, error } = await supabase.storage
+              .from("blog-images")
+              .upload(filePath, file);
+            if (error) {
+              alert("Error al subir la imagen: " + error.message);
+              return;
+            }
+            const { data: urlData } = supabase.storage
+              .from("blog-images")
+              .getPublicUrl(filePath);
+            if (urlData?.publicUrl) {
+              editor.chain().focus().setImage({ src: urlData.publicUrl }).run();
+            } else {
+              alert("No se pudo obtener la URL pública.");
+            }
+          }}
+        />
+        <label htmlFor="upload-image" style={{ cursor: "pointer", padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4 }}>
+          ⬆️ Subir imagen
+        </label>
       </div>
     );
   }
@@ -301,29 +287,20 @@ export default function NuevaEntradaPage() {
     );
   }
 
+  // Muestra el login si no está autenticado (usa el componente LoginForm)
   if (!auth) {
     return (
-      <main style={{ padding: 32, maxWidth: 360 }}>
-        <h2>Login Admin</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            style={{ width: '100%', padding: 8, marginBottom: 8 }}
-            autoFocus
-          />
-          <button type="submit" style={{ width: '100%', padding: 8 }}>Entrar</button>
-        </form>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+      <main style={{ padding: 32, maxWidth: 420, margin: "0 auto" }}>
+        <h2 style={{ textAlign: "center", marginBottom: 24 }}>Panel de Administración</h2>
+        <LoginForm onAuth={() => setAuth(true)} />
       </main>
     );
   }
 
+  // Panel principal si está autenticado
   return (
     <main style={{ padding: 32, maxWidth: 860, margin: "0 auto" }}>
-      <h1>Panel de Administración</h1>
+      <h1 style={{ textAlign: "center", marginBottom: 32 }}>Panel de Administración</h1>
       <form onSubmit={guardarEntrada} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <input
           type="text"
@@ -334,18 +311,21 @@ export default function NuevaEntradaPage() {
             setSlug(slugify(e.target.value));
           }}
           required
+          style={{ fontSize: 18, padding: 10 }}
         />
         <input
           type="text"
           placeholder="Slug (url única)"
           value={slug}
           onChange={e => setSlug(slugify(e.target.value))}
+          style={{ fontSize: 16, padding: 10 }}
         />
         <input
           type="text"
           placeholder="Imagen (URL)"
           value={imagen}
           onChange={e => setImagen(e.target.value)}
+          style={{ fontSize: 16, padding: 10 }}
         />
         <textarea
           placeholder="Meta descripción para SEO"
@@ -353,10 +333,10 @@ export default function NuevaEntradaPage() {
           onChange={e => setMetaDesc(e.target.value)}
           maxLength={160}
           rows={2}
-          style={{resize:'vertical'}}
+          style={{resize:'vertical', fontSize: 16, padding: 10, minHeight: 48}}
         />
         <div>
-          <label>Contenido:</label>
+          <label style={{ fontWeight: "bold", marginBottom: 4, display: "block" }}>Contenido:</label>
           <Toolbar />
           <div
             style={{
@@ -372,12 +352,12 @@ export default function NuevaEntradaPage() {
           </div>
         </div>
         <div style={{display:'flex', gap:16}}>
-          <button type="submit" disabled={guardando}>
+          <button type="submit" disabled={guardando} style={{ fontSize: 16, padding: "10px 20px" }}>
             {guardando ? (editandoId ? "Actualizando..." : "Guardando...") : (editandoId ? "Actualizar entrada" : "Guardar entrada")}
           </button>
           <button
             type="button"
-            style={{background:'#e1e1e1'}}
+            style={{background:'#e1e1e1', fontSize: 16, padding: "10px 20px"}}
             onClick={() => setShowPreview(p => !p)}
           >
             {showPreview ? "Ocultar Previa" : "Vista Previa"}
@@ -385,7 +365,7 @@ export default function NuevaEntradaPage() {
         </div>
         {mensaje && <div style={{ color: mensaje.startsWith("¡") ? "green" : "red" }}>{mensaje}</div>}
         {editandoId && (
-          <button type="button" onClick={limpiarFormulario} style={{ background: "#eee" }}>
+          <button type="button" onClick={limpiarFormulario} style={{ background: "#eee", fontSize: 16, padding: "10px 20px" }}>
             Cancelar edición
           </button>
         )}
@@ -417,7 +397,7 @@ export default function NuevaEntradaPage() {
 
       <hr style={{ margin: "36px 0" }} />
 
-      <h2>Entradas existentes</h2>
+      <h2 style={{ marginBottom: 16 }}>Entradas existentes</h2>
       {cargandoPosts ? (
         <p>Cargando...</p>
       ) : posts.length === 0 ? (
