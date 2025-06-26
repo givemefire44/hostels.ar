@@ -173,7 +173,6 @@ export default function NuevaEntradaPage() {
         gap: 6,
         flexWrap: "wrap"
       }}>
-        {/* ...Botones igual que antes... */}
         <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} style={{ fontWeight: editor.isActive('bold') ? "bold" : "normal" }}>
           B
         </button>
@@ -291,7 +290,7 @@ export default function NuevaEntradaPage() {
   if (!auth) {
     return (
       <main style={{ padding: 32, maxWidth: 420, margin: "0 auto" }}>
-        <h2 style={{ textAlign: "center", marginBottom: 24 }}>Panel de Administración</h2>
+        <h2 style={{ textAlign: "center", marginBottom: 24, color: "#333" }}>Panel de Administración</h2>
         <LoginForm onAuth={() => setAuth(true)} />
       </main>
     );
@@ -300,7 +299,7 @@ export default function NuevaEntradaPage() {
   // Panel principal si está autenticado
   return (
     <main style={{ padding: 32, maxWidth: 860, margin: "0 auto" }}>
-      <h1 style={{ textAlign: "center", marginBottom: 32 }}>Panel de Administración</h1>
+      <h1 style={{ textAlign: "center", marginBottom: 32, color: "#222" }}>Panel de Administración</h1>
       <form onSubmit={guardarEntrada} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <input
           type="text"
@@ -333,10 +332,10 @@ export default function NuevaEntradaPage() {
           onChange={e => setMetaDesc(e.target.value)}
           maxLength={160}
           rows={2}
-          style={{resize:'vertical', fontSize: 16, padding: 10, minHeight: 48}}
+          style={{resize:'vertical', fontSize: 16, padding: 10, minHeight: 48, background: "#fff", color: "#222" }}
         />
         <div>
-          <label style={{ fontWeight: "bold", marginBottom: 4, display: "block" }}>Contenido:</label>
+          <label style={{ fontWeight: "bold", marginBottom: 4, display: "block", color: "#222" }}>Contenido:</label>
           <Toolbar />
           <div
             style={{
@@ -374,9 +373,9 @@ export default function NuevaEntradaPage() {
       {/* SEO snippet y preview */}
       {showPreview && (
         <div style={{marginTop:24}}>
-          <h3 style={{marginBottom:12}}>Vista previa de SEO:</h3>
+          <h3 style={{marginBottom:12, color: "#333" }}>Vista previa de SEO:</h3>
           <SeoSnippet />
-          <h3 style={{margin:"32px 0 12px"}}>Vista previa del contenido:</h3>
+          <h3 style={{margin:"32px 0 12px", color: "#333" }}>Vista previa del contenido:</h3>
           <div
             style={{
               border: "1px solid #ccc",
@@ -397,7 +396,7 @@ export default function NuevaEntradaPage() {
 
       <hr style={{ margin: "36px 0" }} />
 
-      <h2 style={{ marginBottom: 16 }}>Entradas existentes</h2>
+      <h2 style={{ marginBottom: 16, color: "#222" }}>Entradas existentes</h2>
       {cargandoPosts ? (
         <p>Cargando...</p>
       ) : posts.length === 0 ? (
