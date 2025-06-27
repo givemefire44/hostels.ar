@@ -761,3 +761,13 @@ body {
     border-radius: 9px 9px 13px 0;
   }
 }
+/* Puedes ponerlo en tu CSS global, o como style en el div del editor */
+.ProseMirror img {
+  max-width: 400px;
+  max-height: 300px;
+  height: auto;
+  width: auto;
+  display: block;
+  margin: 16px auto;
+  border-radius: 8px;
+}
