@@ -2,99 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { EditorContent, useEditor, NodeViewWrapper, NodeViewContent, ReactNodeViewRenderer } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Bold from "@tiptap/extension-bold";
-import Italic from "@tiptap/extension-italic";
-import Underline from "@tiptap/extension-underline";
-import Link from "@tiptap/extension-link";
-import Heading from "@tiptap/extension-heading";
-import BulletList from "@tiptap/extension-bullet-list";
-import OrderedList from "@tiptap/extension-ordered-list";
-import ListItem from "@tiptap/extension-list-item";
-import Blockquote from "@tiptap/extension-blockquote";
-import CodeBlock from "@tiptap/extension-code-block";
-import Image from "@tiptap/extension-image";
 import LoginForm from './components/LoginForm';
+import BlogEditor from './components/BlogEditor';
 
-// --- NodeView personalizado para controles sobre imágenes ---
-const ImageWithControls = (props: any) => {
-  const { node, updateAttributes, deleteNode } = props;
-
-  // Solo muestra controles si la imagen está seleccionada
-  return (
-    <NodeViewWrapper style={{ position: "relative", display: "inline-block" }}>
-      <img
-        src={node.attrs.src}
-        alt=""
-        style={{
-          maxWidth: 400,
-          maxHeight: 300,
-          borderRadius: 8,
-          display: "block",
-          margin: "16px auto"
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 8,
-          right: 8,
-          display: "flex",
-          gap: 4,
-          background: "rgba(0,0,0,0.6)",
-          borderRadius: 4,
-          padding: "2px 4px",
-          zIndex: 10,
-        }}
-      >
-        <button
-          type="button"
-          onClick={() => {
-            const url = window.prompt("Nueva URL de la imagen", node.attrs.src);
-            if (url) updateAttributes({ src: url });
-          }}
-          style={{
-            color: "#fff",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            fontSize: 16,
-          }}
-          title="Reemplazar imagen"
-        >
-          🔄
-        </button>
-        <button
-          type="button"
-          onClick={deleteNode}
-          style={{
-            color: "#fff",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            fontSize: 16,
-          }}
-          title="Eliminar imagen"
-        >
-          🗑️
-        </button>
-      </div>
-      <NodeViewContent />
-    </NodeViewWrapper>
-  );
-};
-
-function slugify(str: string) {
-  return str
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9 -]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
 
 export default function NuevaEntradaPage() {
   // Controla si el usuario está autenticado (vía LoginForm)
@@ -116,29 +26,8 @@ export default function NuevaEntradaPage() {
   const [posts, setPosts] = useState<any[]>([]);
   const [cargandoPosts, setCargandoPosts] = useState(false);
 
-  // Editor Tiptap con NodeView de imagenes personalizado
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Bold,
-      Italic,
-      Underline,
-      Link,
-      Heading.configure({ levels: [1, 2, 3] }),
-      BulletList,
-      OrderedList,
-      ListItem,
-      Blockquote,
-      CodeBlock,
-      // Aquí extendemos la extensión Image
-      Image.extend({
-        addNodeView() {
-          return ReactNodeViewRenderer(ImageWithControls);
-        }
-      }),
-    ],
-    content: "",
-  });
+  // Contenido del editor (reemplaza el editor TipTap)
+  const [contenido, setContenido] = useState("");
 
   // Cargar posts al entrar
   useEffect(() => {
@@ -159,7 +48,7 @@ export default function NuevaEntradaPage() {
     setGuardando(true);
     setMensaje("");
 
-    if (!titulo || !slug || !editor?.getHTML()) {
+    if (!titulo || !slug || !contenido) {
       setMensaje("Por favor, completa todos los campos.");
       setGuardando(false);
       return;
@@ -170,7 +59,7 @@ export default function NuevaEntradaPage() {
         .from("posts")
         .update({
           titulo,
-          contenido: editor.getHTML(),
+          contenido: contenido,
           slug,
           imagen,
           metaDesc,
@@ -188,7 +77,7 @@ export default function NuevaEntradaPage() {
       const { error } = await supabase.from("posts").insert([
         {
           titulo,
-          contenido: editor.getHTML(),
+          contenido: contenido,
           slug,
           imagen,
           metaDesc,
@@ -213,7 +102,7 @@ export default function NuevaEntradaPage() {
     setImagen("");
     setMetaDesc("");
     setEditandoId(null);
-    editor?.commands.setContent("");
+    setContenido("");
   };
 
   const borrarPost = async (id: number) => {
@@ -228,13 +117,14 @@ export default function NuevaEntradaPage() {
     setImagen(post.imagen || "");
     setMetaDesc(post.metaDesc || "");
     setEditandoId(post.id);
-    editor?.commands.setContent(post.contenido || "");
+    setContenido(post.contenido || "");
     window.scrollTo({top: 0, behavior: "smooth"});
     setShowPreview(false);
   };
 
-  function Toolbar() {
-    if (!editor) return null;
+  // SEO Preview Snippet
+  function SeoSnippet() {
+    const url = `https://tusitio.com/posts/${slug}`;
     return (
       <div style={{
         border: "1px solid #ddd",
@@ -409,31 +299,10 @@ export default function NuevaEntradaPage() {
         />
         <div>
           <label style={{ fontWeight: "bold", marginBottom: 4, display: "block", color: "#222" }}>Contenido:</label>
-          <Toolbar />
-          <div
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: 4,
-              minHeight: 180,
-              padding: 8,
-              marginTop: 4,
-              background: "#fff",
-              position: "relative"
-            }}
-          >
-            <EditorContent editor={editor} />
-            <style>{`
-              .ProseMirror img {
-                max-width: 400px;
-                max-height: 300px;
-                height: auto;
-                width: auto;
-                display: block;
-                margin: 16px auto;
-                border-radius: 8px;
-              }
-            `}</style>
-          </div>
+          <BlogEditor
+            value={contenido}
+            onChange={setContenido}
+          />
         </div>
         <div style={{display:'flex', gap:16}}>
           <button type="submit" disabled={guardando} style={{ fontSize: 16, padding: "10px 20px" }}>
@@ -470,7 +339,7 @@ export default function NuevaEntradaPage() {
               background: "#fafafa",
               minHeight: 150
             }}
-            dangerouslySetInnerHTML={{ __html: editor?.getHTML() || "<p>(Sin contenido)</p>" }}
+            dangerouslySetInnerHTML={{ __html: contenido || "<p>(Sin contenido)</p>" }}
           />
           {imagen && (
             <div style={{marginTop:16}}>
