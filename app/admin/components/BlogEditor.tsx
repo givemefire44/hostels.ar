@@ -4,6 +4,22 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 
+/**
+ * BlogEditor - Editor visual para posts con soporte completo de listas
+ * 
+ * Funcionalidades de lista:
+ * - Listas desordenadas (viñetas): Botón "• Lista"
+ * - Listas ordenadas (numeradas): Botón "1. Lista" 
+ * - Toggle automático entre lista y párrafo normal
+ * - Soporte para múltiples elementos en listas
+ * - Estilos CSS específicos para .ProseMirror en globals.css
+ * 
+ * Futuras mejoras potenciales:
+ * - Listas de tareas con checkboxes
+ * - Sublistas anidadas con diferentes niveles
+ * - Shortcuts de teclado para crear listas
+ */
+
 // Imagen con controles (Eliminar/Reemplazar)
 const ImageWithControls = (props: any) => {
   const { node, updateAttributes, deleteNode } = props;
@@ -86,7 +102,16 @@ const MenuBar = ({ editor }: { editor: any }) => {
   };
 
   return (
-    <div style={{ marginBottom: 8 }}>
+    <div style={{
+      border: "1px solid #ddd",
+      borderRadius: 4,
+      marginBottom: 8,
+      padding: 6,
+      background: "#fafafa",
+      display: "flex",
+      gap: 6,
+      flexWrap: "wrap"
+    }}>
       <button onClick={() => editor.chain().focus().toggleBold().run()} disabled={!editor.can().chain().focus().toggleBold().run()}>
         <b>B</b>
       </button>
@@ -96,6 +121,22 @@ const MenuBar = ({ editor }: { editor: any }) => {
       <button onClick={() => editor.chain().focus().setParagraph().run()}>Párrafo</button>
       <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>H1</button>
       <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>H2</button>
+      {/* Lista desordenada (viñetas) - Toggle entre lista y texto normal */}
+      <button 
+        onClick={() => editor.chain().focus().toggleBulletList().run()} 
+        style={{ fontWeight: editor.isActive('bulletList') ? "bold" : "normal" }}
+        title="Crear lista con viñetas"
+      >
+        • Lista
+      </button>
+      {/* Lista ordenada (numerada) - Toggle entre lista y texto normal */}
+      <button 
+        onClick={() => editor.chain().focus().toggleOrderedList().run()} 
+        style={{ fontWeight: editor.isActive('orderedList') ? "bold" : "normal" }}
+        title="Crear lista numerada"
+      >
+        1. Lista
+      </button>
       <button onClick={addImage}>Imagen</button>
       <button onClick={() => editor.chain().focus().setTextAlign("left").run()}>Izq</button>
       <button onClick={() => editor.chain().focus().setTextAlign("center").run()}>Centro</button>
