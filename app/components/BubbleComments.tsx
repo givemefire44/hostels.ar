@@ -8,7 +8,7 @@ const avatars = [
   "https://randomuser.me/api/portraits/women/68.jpg",
 ];
 
-export default function BubbleComments({ comments }) {
+export default function BubbleComments({ comments }: { comments: any[] }) {
   return (
     <div className="bubble-comments">
       {comments.map((comment, idx) => (
