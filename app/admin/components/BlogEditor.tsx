@@ -4,7 +4,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 
-// Imagen con controles (Eliminar/Reemplazar)
+// Imagen con controles (Eliminar/Reemplazar/Alinear)
 const ImageWithControls = (props: any) => {
   const { node, updateAttributes, deleteNode } = props;
 
@@ -15,8 +15,19 @@ const ImageWithControls = (props: any) => {
     }
   };
 
+  const handleAlign = (alignment: 'left' | 'center' | 'right') => {
+    updateAttributes({ align: alignment });
+  };
+
+  // Get current alignment, default to 'left'
+  const currentAlign = node.attrs.align || 'left';
+
   return (
-    <NodeViewWrapper as="span" style={{ display: "inline-block", position: "relative" }}>
+    <NodeViewWrapper 
+      as="span" 
+      style={{ display: "block", position: "relative" }}
+      className={`image-wrapper image-align-${currentAlign}`}
+    >
       <img
         src={node.attrs.src}
         alt=""
@@ -25,7 +36,6 @@ const ImageWithControls = (props: any) => {
           maxHeight: 300,
           borderRadius: 8,
           display: "block",
-          margin: "16px auto"
         }}
       />
       <div
@@ -41,6 +51,49 @@ const ImageWithControls = (props: any) => {
           zIndex: 10,
         }}
       >
+        {/* Alignment buttons */}
+        <button
+          type="button"
+          onClick={() => handleAlign('left')}
+          style={{
+            color: currentAlign === 'left' ? "#fff700" : "#fff",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: 14,
+          }}
+          title="Alinear a la izquierda"
+        >
+          ⬅️
+        </button>
+        <button
+          type="button"
+          onClick={() => handleAlign('center')}
+          style={{
+            color: currentAlign === 'center' ? "#fff700" : "#fff",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: 14,
+          }}
+          title="Alinear al centro"
+        >
+          ⬆️
+        </button>
+        <button
+          type="button"
+          onClick={() => handleAlign('right')}
+          style={{
+            color: currentAlign === 'right' ? "#fff700" : "#fff",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: 14,
+          }}
+          title="Alinear a la derecha"
+        >
+          ➡️
+        </button>
         <button
           type="button"
           onClick={handleReplace}
@@ -118,6 +171,22 @@ export default function BlogEditor({
         types: ['heading', 'paragraph'],
       }),
       Image.extend({
+        addAttributes() {
+          return {
+            ...this.parent?.(),
+            align: {
+              default: 'left',
+              renderHTML: attributes => {
+                return {
+                  'data-align': attributes.align,
+                };
+              },
+              parseHTML: element => {
+                return element.getAttribute('data-align') || 'left';
+              },
+            },
+          };
+        },
         addNodeView() {
           return ReactNodeViewRenderer(ImageWithControls);
         }
@@ -136,7 +205,7 @@ export default function BlogEditor({
         editor={editor}
         style={{ border: "1px solid #ccc", minHeight: 200, padding: 12 }}
       />
-      {/* CSS para limitar imágenes en el editor */}
+      {/* CSS para estilos del editor */}
       <style>{`
         .ProseMirror img {
           max-width: 400px;
@@ -144,8 +213,33 @@ export default function BlogEditor({
           height: auto;
           width: auto;
           display: block;
-          margin: 16px auto;
           border-radius: 8px;
+        }
+        
+        /* Clases de alineación para imágenes */
+        .image-wrapper.image-align-left img {
+          margin: 16px 16px 16px 0;
+        }
+        
+        .image-wrapper.image-align-center img {
+          margin: 16px auto;
+        }
+        
+        .image-wrapper.image-align-right img {
+          margin: 16px 0 16px 16px;
+          margin-left: auto;
+        }
+        
+        .image-wrapper.image-align-right {
+          text-align: right;
+        }
+        
+        .image-wrapper.image-align-center {
+          text-align: center;
+        }
+        
+        .image-wrapper.image-align-left {
+          text-align: left;
         }
       `}</style>
     </div>
