@@ -1,7 +1,7 @@
 import BubbleComments from "../components/BubbleComments";
 import CitySearch from "../components/CitySearch";
 
-export default function MainHeroLayout({ children }) {
+export default function MainHeroLayout({ children }: any) {
   return (
     <section
       style={{
