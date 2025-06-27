@@ -1,8 +1,79 @@
 import React from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, NodeViewWrapper, NodeViewContent, ReactNodeViewRenderer } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
+
+// Imagen con controles (Eliminar/Reemplazar)
+const ImageWithControls = (props: any) => {
+  const { node, updateAttributes, deleteNode } = props;
+
+  const handleReplace = () => {
+    const url = window.prompt("Nueva URL de la imagen", node.attrs.src);
+    if (url) {
+      updateAttributes({ src: url });
+    }
+  };
+
+  return (
+    <NodeViewWrapper as="span" style={{ display: "inline-block", position: "relative" }}>
+      <img
+        src={node.attrs.src}
+        alt=""
+        style={{
+          maxWidth: 400,
+          maxHeight: 300,
+          borderRadius: 8,
+          display: "block",
+          margin: "16px auto"
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 8,
+          right: 8,
+          display: "flex",
+          gap: 4,
+          background: "rgba(0,0,0,0.6)",
+          borderRadius: 4,
+          padding: "2px 4px",
+          zIndex: 10,
+        }}
+      >
+        <button
+          type="button"
+          onClick={handleReplace}
+          style={{
+            color: "#fff",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: 16,
+          }}
+          title="Reemplazar imagen"
+        >
+          🔄
+        </button>
+        <button
+          type="button"
+          onClick={deleteNode}
+          style={{
+            color: "#fff",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: 16,
+          }}
+          title="Eliminar imagen"
+        >
+          🗑️
+        </button>
+      </div>
+      <NodeViewContent />
+    </NodeViewWrapper>
+  );
+};
 
 const MenuBar = ({ editor }: { editor: any }) => {
   if (!editor) return null;
@@ -43,10 +114,14 @@ export default function BlogEditor({
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Image,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
-      })
+      }),
+      Image.extend({
+        addNodeView() {
+          return ReactNodeViewRenderer(ImageWithControls);
+        }
+      }),
     ],
     content: value || "<p>¡Escribe tu contenido aquí!</p>",
     onUpdate({ editor }) {
@@ -57,7 +132,22 @@ export default function BlogEditor({
   return (
     <div>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} style={{ border: "1px solid #ccc", minHeight: 200, padding: 12 }} />
+      <EditorContent
+        editor={editor}
+        style={{ border: "1px solid #ccc", minHeight: 200, padding: 12 }}
+      />
+      {/* CSS para limitar imágenes en el editor */}
+      <style>{`
+        .ProseMirror img {
+          max-width: 400px;
+          max-height: 300px;
+          height: auto;
+          width: auto;
+          display: block;
+          margin: 16px auto;
+          border-radius: 8px;
+        }
+      `}</style>
     </div>
   );
 }
