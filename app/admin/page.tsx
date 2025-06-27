@@ -462,7 +462,6 @@ export default function NuevaEntradaPage() {
           <SeoSnippet />
           <h3 style={{margin:"32px 0 12px", color: "#333" }}>Vista previa del contenido:</h3>
           <div
-            className="preview-content"
             style={{
               border: "1px solid #ccc",
               borderRadius: 4,
