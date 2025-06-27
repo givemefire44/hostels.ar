@@ -3,6 +3,7 @@ import { useEditor, EditorContent, NodeViewWrapper, NodeViewContent, ReactNodeVi
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
+import Gallery from "../extensions/Gallery";
 
 // Imagen con controles (Eliminar/Reemplazar)
 const ImageWithControls = (props: any) => {
@@ -85,6 +86,10 @@ const MenuBar = ({ editor }: { editor: any }) => {
     }
   };
 
+  const addGallery = () => {
+    editor.chain().focus().setGallery({ images: [], columns: 2 }).run();
+  };
+
   return (
     <div style={{ marginBottom: 8 }}>
       <button onClick={() => editor.chain().focus().toggleBold().run()} disabled={!editor.can().chain().focus().toggleBold().run()}>
@@ -97,6 +102,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>H1</button>
       <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>H2</button>
       <button onClick={addImage}>Imagen</button>
+      <button onClick={addGallery} style={{ backgroundColor: '#28a745', color: 'white', border: 'none', padding: '4px 8px', borderRadius: 4, cursor: 'pointer', marginLeft: 4 }}>📷 Galería</button>
       <button onClick={() => editor.chain().focus().setTextAlign("left").run()}>Izq</button>
       <button onClick={() => editor.chain().focus().setTextAlign("center").run()}>Centro</button>
       <button onClick={() => editor.chain().focus().setTextAlign("right").run()}>Der</button>
@@ -122,6 +128,7 @@ export default function BlogEditor({
           return ReactNodeViewRenderer(ImageWithControls);
         }
       }),
+      Gallery, // Add Gallery extension
     ],
     content: value || "<p>¡Escribe tu contenido aquí!</p>",
     onUpdate({ editor }) {
