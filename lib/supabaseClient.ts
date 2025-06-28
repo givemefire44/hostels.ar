@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Reemplaza estos valores por los de tu proyecto Supabase
-const supabaseUrl = 'https://pyyioonvcpbuoxghakgs.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5eWlvb252Y3BidW94Z2hha2dzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4MDgxODUsImV4cCI6MjA2NjM4NDE4NX0.p-meiWJ28zD9ZcWOoxd2CUzoDR6BBaNnmV9gFkazuiU';
+// Lee las variables de entorno, que están en .env.local
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
