@@ -9,6 +9,22 @@ import Highlight from "@tiptap/extension-highlight";
 import Heading from "@tiptap/extension-heading";
 import ImageGallery from "./ImageGalleryExtension";
 
+/**
+ * BlogEditor - Editor visual para posts con soporte completo de listas
+ * 
+ * Funcionalidades de lista:
+ * - Listas desordenadas (viñetas): Botón "• Lista"
+ * - Listas ordenadas (numeradas): Botón "1. Lista" 
+ * - Toggle automático entre lista y párrafo normal
+ * - Soporte para múltiples elementos en listas
+ * - Estilos CSS específicos para .ProseMirror en globals.css
+ * 
+ * Futuras mejoras potenciales:
+ * - Listas de tareas con checkboxes
+ * - Sublistas anidadas con diferentes niveles
+ * - Shortcuts de teclado para crear listas
+ */
+
 // Imagen con controles (Eliminar/Reemplazar)
 const ImageWithControls = (props: any) => {
   const { node, updateAttributes, deleteNode } = props;
@@ -98,7 +114,6 @@ const MenuBar = ({ editor }: { editor: any }) => {
     '#ffcccc', '#ccffcc', '#ccccff', '#ffffcc', '#ffccff', '#ccffff'
   ];
 
-  // Click outside handler - siempre los hooks arriba, ¡bien!
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (colorPickerRef.current && !colorPickerRef.current.contains(event.target as Node)) {
@@ -124,7 +139,6 @@ const MenuBar = ({ editor }: { editor: any }) => {
     }
   };
 
-  // Función de galería (de main, la sumamos)
   const addGallery = () => {
     editor.chain().focus().setImageGallery().run();
   };
@@ -216,6 +230,23 @@ const MenuBar = ({ editor }: { editor: any }) => {
         <option value="h3">Título 3</option>
         <option value="h4">Título 4</option>
       </select>
+
+      {/* ------- Aporte tuyo: Botones de listas, insertados aquí para no perder funcionalidad ------- */}
+      <button
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        style={{ fontWeight: editor.isActive('bulletList') ? "bold" : "normal" }}
+        title="Crear lista con viñetas"
+      >
+        • Lista
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        style={{ fontWeight: editor.isActive('orderedList') ? "bold" : "normal" }}
+        title="Crear lista numerada"
+      >
+        1. Lista
+      </button>
+      {/* ------------------------------------------------------------------------------------------ */}
 
       <div style={{ width: 1, height: 20, background: '#ddd', margin: '0 4px' }} />
 
@@ -397,7 +428,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       <button
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
         style={{
-          background: editor.isActive({ textAlign: 'left' }) ? '#e0e0e0' : 'white',
+          background: editor.isActive({ textAlign: 'left') ? '#e0e0e0' : 'white',
           border: '1px solid #ccc',
           borderRadius: 4,
           padding: '4px 8px',
@@ -461,7 +492,6 @@ const MenuBar = ({ editor }: { editor: any }) => {
   );
 };
 
-// Editor principal
 export default function BlogEditor({
   value,
   onChange,
