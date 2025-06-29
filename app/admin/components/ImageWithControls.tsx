@@ -1,6 +1,6 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
 
-export default function ImageWithControls({ node, updateAttributes, deleteNode }) {
+export default function ImageWithControls({ node, updateAttributes, deleteNode }: any) {
   const handleReplace = () => {
     const url = prompt('Nueva URL de la imagen');
     if (url) {

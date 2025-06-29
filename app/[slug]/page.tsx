@@ -7,9 +7,10 @@ interface City {
   booking_url: string;
 }
 
-export default function CityPage({ params }: { params: { slug: string } }) {
+export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const city = (cities as City[]).find(
-    (c) => c.slug === params.slug
+    (c) => c.slug === slug
   );
 
   if (!city) {

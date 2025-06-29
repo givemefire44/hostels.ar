@@ -15,8 +15,11 @@ import ListItem from "@tiptap/extension-list-item";
 import Blockquote from "@tiptap/extension-blockquote";
 import CodeBlock from "@tiptap/extension-code-block";
 import Image from "@tiptap/extension-image";
-import Gallery from './extensions/Gallery';
+import TextStyle from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
 import LoginForm from './components/LoginForm';
+import ImageGallery from './components/ImageGalleryExtension';
 
 // --- NodeView personalizado para controles sobre imágenes ---
 const ImageWithControls = (props: any) => {
@@ -125,7 +128,12 @@ export default function NuevaEntradaPage() {
       Italic,
       Underline,
       Link,
-      Heading.configure({ levels: [1, 2, 3] }),
+      TextStyle,
+      Color,
+      Highlight.configure({
+        multicolor: true,
+      }),
+      Heading.configure({ levels: [1, 2, 3, 4] }),
       BulletList,
       OrderedList,
       ListItem,
@@ -137,6 +145,7 @@ export default function NuevaEntradaPage() {
           return ReactNodeViewRenderer(ImageWithControls);
         }
       }),
+      ImageGallery,
     ],
     content: "",
   });
@@ -235,7 +244,22 @@ export default function NuevaEntradaPage() {
   };
 
   function Toolbar() {
+    const [showColorPicker, setShowColorPicker] = useState(false);
+    const [showHighlightPicker, setShowHighlightPicker] = useState(false);
+
     if (!editor) return null;
+
+    // Paleta de colores básica
+    const textColors = [
+      '#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff',
+      '#ff0000', '#ff6600', '#ffcc00', '#00ff00', '#0066ff', '#6600ff',
+      '#ff3366', '#ff9900', '#33cc00', '#00ccff', '#9966ff', '#ff6699'
+    ];
+
+    const highlightColors = [
+      '#ffff00', '#00ff00', '#ff00ff', '#00ffff', '#ff6600', '#6600ff',
+      '#ffcccc', '#ccffcc', '#ccccff', '#ffffcc', '#ffccff', '#ccffff'
+    ];
     return (
       <div style={{
         border: "1px solid #ddd",
@@ -256,6 +280,215 @@ export default function NuevaEntradaPage() {
         <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} style={{ textDecoration: editor.isActive('underline') ? "underline" : "none" }}>
           U
         </button>
+
+        {/* Text size dropdown */}
+        <select
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === 'paragraph') {
+              editor.chain().focus().setParagraph().run();
+            } else if (value === 'h1') {
+              editor.chain().focus().toggleHeading({ level: 1 }).run();
+            } else if (value === 'h2') {
+              editor.chain().focus().toggleHeading({ level: 2 }).run();
+            } else if (value === 'h3') {
+              editor.chain().focus().toggleHeading({ level: 3 }).run();
+            } else if (value === 'h4') {
+              editor.chain().focus().toggleHeading({ level: 4 }).run();
+            }
+          }}
+          value={
+            editor.isActive('heading', { level: 1 }) ? 'h1' :
+            editor.isActive('heading', { level: 2 }) ? 'h2' :
+            editor.isActive('heading', { level: 3 }) ? 'h3' :
+            editor.isActive('heading', { level: 4 }) ? 'h4' :
+            'paragraph'
+          }
+          style={{ margin: '0 8px', padding: '4px', border: '1px solid #ccc', borderRadius: 4 }}
+        >
+          <option value="paragraph">Párrafo</option>
+          <option value="h1">Título 1</option>
+          <option value="h2">Título 2</option>
+          <option value="h3">Título 3</option>
+          <option value="h4">Título 4</option>
+        </select>
+
+        {/* Text color picker */}
+        <div style={{ position: 'relative', margin: '0 4px' }}>
+          <button
+            type="button"
+            onClick={() => setShowColorPicker(!showColorPicker)}
+            style={{
+              border: '1px solid #ccc',
+              borderRadius: 4,
+              padding: '4px 8px',
+              background: 'white',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4
+            }}
+          >
+            <span style={{ 
+              width: 12, 
+              height: 12, 
+              background: editor.getAttributes('textStyle').color || '#000000',
+              border: '1px solid #ccc',
+              borderRadius: 2
+            }} />
+            <span>A</span>
+          </button>
+          
+          {showColorPicker && (
+            <div style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              zIndex: 1000,
+              background: 'white',
+              border: '1px solid #ccc',
+              borderRadius: 4,
+              padding: 8,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(6, 1fr)',
+              gap: 4,
+              width: 180
+            }}>
+              {textColors.map(color => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => {
+                    editor.chain().focus().setColor(color).run();
+                    setShowColorPicker(false);
+                  }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    background: color,
+                    border: '1px solid #ccc',
+                    borderRadius: 2,
+                    cursor: 'pointer'
+                  }}
+                  title={color}
+                />
+              ))}
+              <input
+                type="color"
+                onChange={(e) => {
+                  editor.chain().focus().setColor(e.target.value).run();
+                  setShowColorPicker(false);
+                }}
+                style={{
+                  gridColumn: 'span 6',
+                  width: '100%',
+                  height: 24,
+                  border: '1px solid #ccc',
+                  borderRadius: 2,
+                  cursor: 'pointer'
+                }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Highlight color picker */}
+        <div style={{ position: 'relative', margin: '0 4px' }}>
+          <button
+            type="button"
+            onClick={() => setShowHighlightPicker(!showHighlightPicker)}
+            style={{
+              border: '1px solid #ccc',
+              borderRadius: 4,
+              padding: '4px 8px',
+              background: 'white',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4
+            }}
+          >
+            <span style={{ 
+              width: 12, 
+              height: 12, 
+              background: editor.getAttributes('highlight').color || '#ffff00',
+              border: '1px solid #ccc',
+              borderRadius: 2
+            }} />
+            <span>🖍️</span>
+          </button>
+          
+          {showHighlightPicker && (
+            <div style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              zIndex: 1000,
+              background: 'white',
+              border: '1px solid #ccc',
+              borderRadius: 4,
+              padding: 8,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(6, 1fr)',
+              gap: 4,
+              width: 180
+            }}>
+              <button
+                type="button"
+                onClick={() => {
+                  editor.chain().focus().unsetHighlight().run();
+                  setShowHighlightPicker(false);
+                }}
+                style={{
+                  gridColumn: 'span 6',
+                  padding: '4px 8px',
+                  border: '1px solid #ccc',
+                  borderRadius: 2,
+                  background: 'white',
+                  cursor: 'pointer'
+                }}
+              >
+                Sin resaltado
+              </button>
+              {highlightColors.map(color => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => {
+                    editor.chain().focus().setHighlight({ color }).run();
+                    setShowHighlightPicker(false);
+                  }}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    background: color,
+                    border: '1px solid #ccc',
+                    borderRadius: 2,
+                    cursor: 'pointer'
+                  }}
+                  title={color}
+                />
+              ))}
+              <input
+                type="color"
+                onChange={(e) => {
+                  editor.chain().focus().setHighlight({ color: e.target.value }).run();
+                  setShowHighlightPicker(false);
+                }}
+                style={{
+                  gridColumn: 'span 6',
+                  width: '100%',
+                  height: 24,
+                  border: '1px solid #ccc',
+                  borderRadius: 2,
+                  cursor: 'pointer'
+                }}
+              />
+            </div>
+          )}
+        </div>
         <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} style={{ fontWeight: editor.isActive('heading', { level: 1 }) ? "bold" : "normal" }}>
           H1
         </button>
@@ -336,6 +569,15 @@ export default function NuevaEntradaPage() {
         <label htmlFor="upload-image" style={{ cursor: "pointer", padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4 }}>
           ⬆️ Subir imagen
         </label>
+        <button
+          type="button"
+          onClick={() => {
+            editor.chain().focus().setImageGallery().run();
+          }}
+          style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4, cursor: "pointer" }}
+        >
+          📸 Galería
+        </button>
       </div>
     );
   }

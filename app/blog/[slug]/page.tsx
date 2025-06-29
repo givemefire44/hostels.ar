@@ -1,7 +1,7 @@
-import { supabase } from '../../../lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 
-export default async function BlogPostPage({ params }) {
-  const { slug } = params;
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const { data: post } = await supabase
     .from('posts')
     .select('*')

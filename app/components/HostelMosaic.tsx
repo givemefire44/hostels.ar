@@ -54,7 +54,7 @@ const hostels = [
   },
 ];
 
-function getCardClass(i) {
+function getCardClass(i: number) {
   let classes = "hostel-mosaic-card";
   if (i % 3 === 0) classes += " mt-24";
   if (i % 3 === 2) classes += " mb-24";
@@ -63,7 +63,7 @@ function getCardClass(i) {
   return classes;
 }
 
-function getCardStyle(i) {
+function getCardStyle(i: number) {
   // Reemplazamos el rotate dinámico por uno fijo para evitar hydration errors.
   // Si quieres que sea random pero sin hydration, hazlo solo en el cliente con useEffect.
   return {
