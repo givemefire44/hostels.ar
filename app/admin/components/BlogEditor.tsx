@@ -231,7 +231,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
         <option value="h4">Título 4</option>
       </select>
 
-      {/* ------- Aporte tuyo: Botones de listas, insertados aquí para no perder funcionalidad ------- */}
+      {/* ------- Botones de listas, insertados aquí para no perder funcionalidad ------- */}
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         style={{ fontWeight: editor.isActive('bulletList') ? "bold" : "normal" }}
@@ -428,7 +428,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       <button
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
         style={{
-          background: editor.isActive({ textAlign: 'left') ? '#e0e0e0' : 'white',
+          background: editor.isActive({ textAlign: 'left' }) ? '#e0e0e0' : 'white',
           border: '1px solid #ccc',
           borderRadius: 4,
           padding: '4px 8px',
@@ -475,7 +475,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
         Imagen
       </button>
 
-      {/* Botón de galería (de main, lo agregamos al final) */}
+      {/* Botón de galería */}
       <button
         onClick={addGallery}
         style={{
