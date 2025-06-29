@@ -7,6 +7,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
 import Heading from "@tiptap/extension-heading";
+import ImageGallery from "./ImageGalleryExtension";
 
 // Imagen con controles (Eliminar/Reemplazar)
 const ImageWithControls = (props: any) => {
@@ -85,7 +86,19 @@ const MenuBar = ({ editor }: { editor: any }) => {
   const colorPickerRef = useRef<HTMLDivElement>(null);
   const highlightPickerRef = useRef<HTMLDivElement>(null);
 
-  // Click outside handler - always call hooks at the top level
+  // Paleta de colores básica
+  const textColors = [
+    '#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff',
+    '#ff0000', '#ff6600', '#ffcc00', '#00ff00', '#0066ff', '#6600ff',
+    '#ff3366', '#ff9900', '#33cc00', '#00ccff', '#9966ff', '#ff6699'
+  ];
+
+  const highlightColors = [
+    '#ffff00', '#00ff00', '#ff00ff', '#00ffff', '#ff6600', '#6600ff',
+    '#ffcccc', '#ccffcc', '#ccccff', '#ffffcc', '#ffccff', '#ccffff'
+  ];
+
+  // Click outside handler - siempre los hooks arriba, ¡bien!
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (colorPickerRef.current && !colorPickerRef.current.contains(event.target as Node)) {
@@ -101,7 +114,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  
+
   if (!editor) return null;
 
   const addImage = () => {
@@ -111,24 +124,17 @@ const MenuBar = ({ editor }: { editor: any }) => {
     }
   };
 
-  // Paleta de colores básica
-  const textColors = [
-    '#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff',
-    '#ff0000', '#ff6600', '#ffcc00', '#00ff00', '#0066ff', '#6600ff',
-    '#ff3366', '#ff9900', '#33cc00', '#00ccff', '#9966ff', '#ff6699'
-  ];
-
-  const highlightColors = [
-    '#ffff00', '#00ff00', '#ff00ff', '#00ffff', '#ff6600', '#6600ff',
-    '#ffcccc', '#ccffcc', '#ccccff', '#ffffcc', '#ffccff', '#ccffff'
-  ];
+  // Función de galería (de main, la sumamos)
+  const addGallery = () => {
+    editor.chain().focus().setImageGallery().run();
+  };
 
   return (
-    <div style={{ 
-      marginBottom: 8, 
-      padding: 8, 
-      border: '1px solid #ddd', 
-      borderRadius: 6, 
+    <div style={{
+      marginBottom: 8,
+      padding: 8,
+      border: '1px solid #ddd',
+      borderRadius: 6,
       background: '#fafafa',
       display: 'flex',
       flexWrap: 'wrap',
@@ -136,8 +142,8 @@ const MenuBar = ({ editor }: { editor: any }) => {
       alignItems: 'center'
     }}>
       {/* Formato básico */}
-      <button 
-        onClick={() => editor.chain().focus().toggleBold().run()} 
+      <button
+        onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         style={{
           fontWeight: editor.isActive('bold') ? 'bold' : 'normal',
@@ -150,9 +156,9 @@ const MenuBar = ({ editor }: { editor: any }) => {
       >
         <b>B</b>
       </button>
-      
-      <button 
-        onClick={() => editor.chain().focus().toggleItalic().run()} 
+
+      <button
+        onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         style={{
           fontStyle: editor.isActive('italic') ? 'italic' : 'normal',
@@ -187,15 +193,15 @@ const MenuBar = ({ editor }: { editor: any }) => {
             // Aplicar estilo pequeño vía mark personalizado
           } else if (value === 'large') {
             editor.chain().focus().setParagraph().run();
-            // Aplicar estilo grande vía mark personalizado  
+            // Aplicar estilo grande vía mark personalizado
           }
         }}
         value={
           editor.isActive('heading', { level: 1 }) ? 'h1' :
-          editor.isActive('heading', { level: 2 }) ? 'h2' :
-          editor.isActive('heading', { level: 3 }) ? 'h3' :
-          editor.isActive('heading', { level: 4 }) ? 'h4' :
-          'paragraph'
+            editor.isActive('heading', { level: 2 }) ? 'h2' :
+              editor.isActive('heading', { level: 3 }) ? 'h3' :
+                editor.isActive('heading', { level: 4 }) ? 'h4' :
+                  'paragraph'
         }
         style={{
           border: '1px solid #ccc',
@@ -228,16 +234,16 @@ const MenuBar = ({ editor }: { editor: any }) => {
             gap: 4
           }}
         >
-          <span style={{ 
-            width: 12, 
-            height: 12, 
+          <span style={{
+            width: 12,
+            height: 12,
             background: editor.getAttributes('textStyle').color || '#000000',
             border: '1px solid #ccc',
             borderRadius: 2
           }} />
           <span>A</span>
         </button>
-        
+
         {showColorPicker && (
           <div style={{
             position: 'absolute',
@@ -306,16 +312,16 @@ const MenuBar = ({ editor }: { editor: any }) => {
             gap: 4
           }}
         >
-          <span style={{ 
-            width: 12, 
-            height: 12, 
+          <span style={{
+            width: 12,
+            height: 12,
             background: editor.getAttributes('highlight').color || '#ffff00',
             border: '1px solid #ccc',
             borderRadius: 2
           }} />
           <span>🖍️</span>
         </button>
-        
+
         {showHighlightPicker && (
           <div style={{
             position: 'absolute',
@@ -388,7 +394,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       <div style={{ width: 1, height: 20, background: '#ddd', margin: '0 4px' }} />
 
       {/* Otros controles existentes */}
-      <button 
+      <button
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
         style={{
           background: editor.isActive({ textAlign: 'left' }) ? '#e0e0e0' : 'white',
@@ -400,7 +406,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       >
         Izq
       </button>
-      <button 
+      <button
         onClick={() => editor.chain().focus().setTextAlign("center").run()}
         style={{
           background: editor.isActive({ textAlign: 'center' }) ? '#e0e0e0' : 'white',
@@ -412,7 +418,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
       >
         Centro
       </button>
-      <button 
+      <button
         onClick={() => editor.chain().focus().setTextAlign("right").run()}
         style={{
           background: editor.isActive({ textAlign: 'right' }) ? '#e0e0e0' : 'white',
@@ -424,8 +430,8 @@ const MenuBar = ({ editor }: { editor: any }) => {
       >
         Der
       </button>
-      
-      <button 
+
+      <button
         onClick={addImage}
         style={{
           border: '1px solid #ccc',
@@ -437,10 +443,25 @@ const MenuBar = ({ editor }: { editor: any }) => {
       >
         Imagen
       </button>
+
+      {/* Botón de galería (de main, lo agregamos al final) */}
+      <button
+        onClick={addGallery}
+        style={{
+          border: '1px solid #ccc',
+          borderRadius: 4,
+          padding: '4px 8px',
+          background: 'white',
+          cursor: 'pointer'
+        }}
+      >
+        📸 Galería
+      </button>
     </div>
   );
 };
 
+// Editor principal
 export default function BlogEditor({
   value,
   onChange,
@@ -467,6 +488,7 @@ export default function BlogEditor({
           return ReactNodeViewRenderer(ImageWithControls);
         }
       }),
+      ImageGallery,
     ],
     content: value || "<p>¡Escribe tu contenido aquí!</p>",
     onUpdate({ editor }) {

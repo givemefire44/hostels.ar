@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import BlogEditor from "../components/BlogEditor";
+import BlogEditor from "@/app/admin/components/BlogEditor";
+
 
 export default function NuevaEntrada() {
   const [content, setContent] = useState("");

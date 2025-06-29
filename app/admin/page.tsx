@@ -19,6 +19,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
 import LoginForm from './components/LoginForm';
+import ImageGallery from './components/ImageGalleryExtension';
 
 // --- NodeView personalizado para controles sobre imágenes ---
 const ImageWithControls = (props: any) => {
@@ -144,6 +145,7 @@ export default function NuevaEntradaPage() {
           return ReactNodeViewRenderer(ImageWithControls);
         }
       }),
+      ImageGallery,
     ],
     content: "",
   });
@@ -567,6 +569,15 @@ export default function NuevaEntradaPage() {
         <label htmlFor="upload-image" style={{ cursor: "pointer", padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4 }}>
           ⬆️ Subir imagen
         </label>
+        <button
+          type="button"
+          onClick={() => {
+            editor.chain().focus().setImageGallery().run();
+          }}
+          style={{ padding: "4px 8px", border: "1px solid #ccc", borderRadius: 4, marginLeft: 4, cursor: "pointer" }}
+        >
+          📸 Galería
+        </button>
       </div>
     );
   }
