@@ -781,6 +781,113 @@ body {
   border-radius: 8px;
 }
 
+/* Estilos para el editor de texto con colores y formateo */
+.ProseMirror {
+  outline: none;
+  padding: 12px;
+  min-height: 200px;
+}
+
+.ProseMirror h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem 0;
+  line-height: 1.2;
+}
+
+.ProseMirror h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1.25rem 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.ProseMirror h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.ProseMirror h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.875rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.ProseMirror p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+/* Estilos para la vista previa */
+.preview-content h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem 0;
+  line-height: 1.2;
+}
+
+.preview-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1.25rem 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.preview-content h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.preview-content h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.875rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.preview-content p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+/* Estilos para colores de texto preservados */
+.ProseMirror [style*="color:"] {
+  /* Los colores se preservan a través del atributo style */
+}
+
+.preview-content [style*="color:"] {
+  /* Los colores se preservan a través del atributo style */
+}
+
+/* Estilos para resaltado de texto */
+.ProseMirror mark {
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.preview-content mark {
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Clases utilitarias modulares para futuros usos */
+.blog-text-small {
+  font-size: 0.875rem;
+}
+
+.blog-text-large {
+  font-size: 1.125rem;
+}
+
+.blog-text-xl {
+  font-size: 1.25rem;
+}
+
 /* Gallery styles for editor and preview */
 .image-gallery-render {
   margin: 16px auto;
@@ -827,17 +934,31 @@ body {
   display: block;
 }
 
+/* Estilos responsivos para el editor */
+@media (max-width: 768px) {
+  .ProseMirror h1 {
+    font-size: 2rem;
+  }
+  .ProseMirror h2 {
+    font-size: 1.75rem;
+  }
+  .preview-content h1 {
+    font-size: 2rem;
+  }
+  .preview-content h2 {
+    font-size: 1.75rem;
+  }
+}
+
 /* Responsive gallery */
 @media (max-width: 600px) {
   .gallery-grid-render {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 6px;
   }
-  
   .gallery-grid-render img {
     height: 100px;
   }
-  
   .preview-content .gallery-grid-render img {
     height: 100px;
   }

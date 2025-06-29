@@ -11,7 +11,7 @@ const avatars = [
 export default function BubbleComments({ comments }: { comments: any[] }) {
   return (
     <div className="bubble-comments">
-      {comments.map((comment, idx) => (
+      {comments.map((comment: any, idx: number) => (
         <div
           key={idx}
           className="bubble-comment"
