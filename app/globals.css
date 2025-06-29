@@ -792,24 +792,64 @@ body {
     border-radius: 9px 9px 13px 0;
   }
 }
-/* Puedes ponerlo en tu CSS global, o como style en el div del editor */
-.ProseMirror img {
+/* Estilos para el editor y preview de imágenes */
+.ProseMirror img, .preview-content img {
   max-width: 400px;
   max-height: 300px;
   height: auto;
   width: auto;
   display: block;
-  margin: 16px auto;
   border-radius: 8px;
 }
-.preview-content img {
-  max-width: 400px;
-  max-height: 300px;
-  height: auto;
-  width: auto;
-  display: block;
+
+/* Clases de alineación para imágenes en el editor */
+.ProseMirror .image-wrapper.image-align-left img,
+.preview-content .image-wrapper.image-align-left img,
+.ProseMirror [data-align="left"] img,
+.preview-content [data-align="left"] img {
+  margin: 16px 16px 16px 0;
+}
+
+.ProseMirror .image-wrapper.image-align-center img,
+.preview-content .image-wrapper.image-align-center img,
+.ProseMirror [data-align="center"] img,
+.preview-content [data-align="center"] img {
   margin: 16px auto;
-  border-radius: 8px;
+}
+
+.ProseMirror .image-wrapper.image-align-right img,
+.preview-content .image-wrapper.image-align-right img,
+.ProseMirror [data-align="right"] img,
+.preview-content [data-align="right"] img {
+  margin: 16px 0 16px auto;
+}
+
+/* Alineación del contenedor para imágenes alineadas a la derecha */
+.ProseMirror .image-wrapper.image-align-right,
+.preview-content .image-wrapper.image-align-right,
+.ProseMirror [data-align="right"],
+.preview-content [data-align="right"] {
+  text-align: right;
+}
+
+.ProseMirror .image-wrapper.image-align-center,
+.preview-content .image-wrapper.image-align-center,
+.ProseMirror [data-align="center"],
+.preview-content [data-align="center"] {
+  text-align: center;
+}
+
+.ProseMirror .image-wrapper.image-align-left,
+.preview-content .image-wrapper.image-align-left,
+.ProseMirror [data-align="left"],
+.preview-content [data-align="left"] {
+  text-align: left;
+}
+
+/* Alineación por defecto si no se especifica align */
+.ProseMirror img:not([data-align]),
+.preview-content img:not([data-align]) {
+  margin: 16px 16px 16px 0;
 }
 /* Estilos para el editor de texto con colores y formateo */
 .ProseMirror {
