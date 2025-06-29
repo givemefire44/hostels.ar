@@ -25,6 +25,37 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* TipTap Editor List Styles 
+   Estilos específicos para listas en el editor visual del admin.
+   Soporte para listas ordenadas (ol) y desordenadas (ul).
+   Incluye estilos para sublistas anidadas.
+   Futuras mejoras: estilos para listas de tareas (checkboxes)
+*/
+.ProseMirror ul, .ProseMirror ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.ProseMirror li {
+  margin: 0.25rem 0;
+}
+
+.ProseMirror ul li {
+  list-style-type: disc;
+}
+
+.ProseMirror ol li {
+  list-style-type: decimal;
+}
+
+.ProseMirror ul ul li {
+  list-style-type: circle;
+}
+
+.ProseMirror ol ol li {
+  list-style-type: lower-alpha;
+}
+
 /* HERO SECTION */
 .hero-section {
   background: linear-gradient(135deg, #8816c0 0%, #8f3985 100%);
@@ -819,4 +850,259 @@ body {
 .ProseMirror img:not([data-align]),
 .preview-content img:not([data-align]) {
   margin: 16px 16px 16px 0;
+}
+/* Estilos para el editor de texto con colores y formateo */
+.ProseMirror {
+  outline: none;
+  padding: 12px;
+  min-height: 200px;
+}
+
+.ProseMirror h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem 0;
+  line-height: 1.2;
+}
+
+.ProseMirror h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1.25rem 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.ProseMirror h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.ProseMirror h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.875rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.ProseMirror p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+/* Estilos para la vista previa */
+.preview-content h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem 0;
+  line-height: 1.2;
+}
+
+.preview-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1.25rem 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.preview-content h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.preview-content h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.875rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.preview-content p {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+}
+
+/* Estilos para colores de texto preservados */
+.ProseMirror [style*="color:"] {
+  /* Los colores se preservan a través del atributo style */
+}
+
+.preview-content [style*="color:"] {
+  /* Los colores se preservan a través del atributo style */
+}
+
+/* Estilos para resaltado de texto */
+.ProseMirror mark {
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.preview-content mark {
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Clases utilitarias modulares para futuros usos */
+.blog-text-small {
+  font-size: 0.875rem;
+}
+
+.blog-text-large {
+  font-size: 1.125rem;
+}
+
+.blog-text-xl {
+  font-size: 1.25rem;
+}
+
+/* Gallery styles for editor and preview */
+.image-gallery-render {
+  margin: 16px auto;
+  max-width: 600px;
+}
+
+.gallery-grid-render {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gallery-grid-render img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.2s ease;
+}
+
+.gallery-grid-render img:hover {
+  transform: scale(1.02);
+}
+
+/* Preview content gallery styles */
+.preview-content .image-gallery-render {
+  margin: 20px 0;
+}
+
+.preview-content .gallery-grid-render {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.preview-content .gallery-grid-render img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin: 0;
+  display: block;
+}
+
+/* ------ Gallery styles for TipTap extension galleries (from tu rama) ------ */
+.ProseMirror .gallery-with-controls {
+  margin: 16px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px;
+  background: #fafafa;
+}
+
+.ProseMirror .gallery-grid {
+  display: grid;
+  gap: 8px;
+  border-radius: 8px;
+}
+
+.ProseMirror .gallery-grid img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Preview content gallery styles */
+.preview-content [data-type="gallery"] {
+  margin: 16px 0;
+}
+
+.preview-content .gallery-grid {
+  display: grid;
+  gap: 8px;
+  border-radius: 8px;
+}
+
+.preview-content [data-type="gallery"] img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  border-radius: 6px;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+
+/* Default 2-column gallery */
+.preview-content [data-type="gallery"][data-columns="2"] .gallery-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 3-column gallery */
+.preview-content [data-type="gallery"][data-columns="3"] .gallery-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* 4-column gallery */
+.preview-content [data-type="gallery"][data-columns="4"] .gallery-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Responsive gallery - stack on mobile */
+@media (max-width: 768px) {
+  .ProseMirror h1 {
+    font-size: 2rem;
+  }
+  .ProseMirror h2 {
+    font-size: 1.75rem;
+  }
+  .preview-content h1 {
+    font-size: 2rem;
+  }
+  .preview-content h2 {
+    font-size: 1.75rem;
+  }
+  .preview-content [data-type="gallery"][data-columns="3"] .gallery-grid,
+  .preview-content [data-type="gallery"][data-columns="4"] .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsive gallery */
+@media (max-width: 600px) {
+  .gallery-grid-render {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+  }
+  .gallery-grid-render img {
+    height: 100px;
+  }
+  .preview-content .gallery-grid-render img {
+    height: 100px;
+  }
+}
+
+/* Responsive gallery for TipTap extension galleries */
+@media (max-width: 480px) {
+  .preview-content [data-type="gallery"] .gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
